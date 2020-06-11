@@ -1,0 +1,55 @@
+
+SRCS_DIR = ./srcs/
+
+SRCS +=$(SRCS_DIR)ft_strlen.s
+
+OBJS = $(SRCS:.s=.o)
+
+NA = nasm
+
+OS := $(shell uname -s)
+
+ifeq ($(OS), Linux)
+ NFLAGS = -f elf64
+else
+ NFLAGS = -f machof64
+endif
+
+CC = clang
+
+CFLAGS = -Werror
+CFLAGS += -Wextra
+CFLAGS += -Wall
+
+NAME = libasm.a
+
+INC_DIR = ./includes/
+
+HEADER = $(INC_DIR)libasm.h
+
+all :		$(NAME)
+
+$(NAME):	$(OBJS)
+	@echo "\n		🔗 Linking $@'s objects files...\n"
+	ar rcs $@ $^
+	@echo "\n		🥳  Yay  !  $@ done.\n"
+
+$(OBJS):	%.o: %.s $(HEADER)
+	$(NA) $(NFLAGS) $< 
+
+test: $(NAME) $(HEADER) main.c
+	$(CC) $(CFLAGS) -I $(INC_DIR) main.c -L. -lasm -o test
+
+f: test 
+	./test	
+
+clean:
+	$(RM) $(OBJS)
+
+fclean: clean
+	$(RM) $(NAME) test
+
+re: fclean $(NAME)
+
+.PHONY: all clean fclean re libasm objets test f
+
