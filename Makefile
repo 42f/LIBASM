@@ -2,6 +2,12 @@
 SRCS_DIR = ./srcs/
 
 SRCS +=$(SRCS_DIR)ft_strlen.s
+SRCS +=$(SRCS_DIR)ft_read.s
+SRCS +=$(SRCS_DIR)ft_write.s
+#SRCS +=$(SRCS_DIR)ft_strcmp.s
+#SRCS +=$(SRCS_DIR)ft_strcpy.s
+#SRCS +=$(SRCS_DIR)ft_strdup.s
+#SRCS +=$(SRCS_DIR)ft_strlen.s
 
 OBJS = $(SRCS:.s=.o)
 
@@ -20,6 +26,8 @@ CC = clang
 CFLAGS = -Werror
 CFLAGS += -Wextra
 CFLAGS += -Wall
+CFLAGS += -g
+CFLAGS += -fsanitize=address
 
 NAME = libasm.a
 
@@ -52,4 +60,3 @@ fclean: clean
 re: fclean $(NAME)
 
 .PHONY: all clean fclean re libasm objets test f
-
