@@ -4,7 +4,7 @@ SRCS_DIR = ./srcs/
 SRCS +=$(SRCS_DIR)ft_strlen.s
 SRCS +=$(SRCS_DIR)ft_read.s
 SRCS +=$(SRCS_DIR)ft_write.s
-#SRCS +=$(SRCS_DIR)ft_strcmp.s
+SRCS +=$(SRCS_DIR)ft_strcmp.s
 #SRCS +=$(SRCS_DIR)ft_strcpy.s
 #SRCS +=$(SRCS_DIR)ft_strdup.s
 #SRCS +=$(SRCS_DIR)ft_strlen.s
@@ -20,6 +20,8 @@ ifeq ($(OS), Linux)
 else
  NFLAGS = -f machof64
 endif
+NFLAGS += -g
+NFLAGS += -F dwarf
 
 CC = clang
 
@@ -27,7 +29,7 @@ CFLAGS = -Werror
 CFLAGS += -Wextra
 CFLAGS += -Wall
 CFLAGS += -g
-CFLAGS += -fsanitize=address
+#CFLAGS += -fsanitize=address
 
 NAME = libasm.a
 
