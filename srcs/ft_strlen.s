@@ -2,16 +2,16 @@ section .text
 	global ft_strlen
 
 ft_strlen:
-	mov rsi,rdi 
-	mov rax, 0
+	mov rsi,rdi 		;store address of the argument (str) in rsi and rax
+	mov rax, rdi		
 
-len_loop:
-	mov cl, [rsi]
-	cmp cl, 0
+len_loop:				;loop until rsi is on '\0' and only inc rsi doing so
+	cmp byte [rsi], 0
 	je end
-	inc rax
 	inc rsi
 	jmp len_loop
 
-end:
+end:					;substract the starting address stored in rax and the location of rsi (== '\0')
+	sub rsi, rax
+	mov rax, rsi		;mov the result in rax to return
 	ret

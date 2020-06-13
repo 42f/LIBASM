@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:01:02 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/12 19:01:17 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/13 23:24:41 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,17 @@ static void test_ft_strcmp()
 		"",
 		"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwhello"
 	};
-		
+	int ret_c;
+	int ret_ft;
+	
 	for (int i = 0; i < nb_test; i++)
 	{
 		printf("[%s]\n[%s]\n", str_1[i], str_2[i]);
 		printf(DARK);
-		printf("return _ft: %d\nreturn  _c: %d\n", ft_strcmp(str_1[i], str_2[i]), strcmp(str_1[i], str_2[i]));
-		if (ft_strcmp(str_1[i], str_2[i]) != strcmp(str_1[i], str_2[i]))
+		ret_ft = ft_strcmp(str_1[i], str_2[i]); 
+		ret_c =  strcmp(str_1[i], str_2[i]);
+		printf("return _ft: %d\nreturn  _c: %d\n", ret_ft, ret_c);
+		if (ret_ft != ret_c)
 		{
 			printf(RED);
 			printf("[⛔️KO !]\n\n");

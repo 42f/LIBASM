@@ -1,24 +1,21 @@
 section .text
 	global ft_strcmp
 
-ft_strcmp:
-	jmp cmp_loop
-
-inc_loop:
+next_char:
 	inc rdi
 	inc rsi
 
-cmp_loop:
-	repe cmp rsi, rdi
-	ret	
-;	jne exit_diff
-;	cmp [rdi], 0
-;	je exit
-;	jmp inc_loop
+ft_strcmp:
+	cmp byte [rdi], 0
+	jz end_loop
+	cmp byte [rsi], 0
+	jz end_loop
+	mov r12b, [rsi]
+	cmp r12b, [rdi]
+	je next_char
 
-;exit_diff:
-;	mov rax, 
-;	ret
-
-;exit:
-;	ret
+end_loop:
+	mov al, [rdi]
+	sub al, [rsi]
+	movsx eax, al
+	ret
