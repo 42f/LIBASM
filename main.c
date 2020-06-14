@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:01:02 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/14 18:09:55 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/14 22:59:29 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ static void test_ft_read()
 static void test_ft_strcpy()
 {
 	int nb_test = 5;
-	char *ret_ft;
-	char *ret_c;
+	char *ret_ft = NULL;
+	char *ret_c = NULL;
 	char *str_1[] = 
 	{
 		"hello",
@@ -93,8 +93,7 @@ static void test_ft_strcpy()
 		if (str_3[i] == NULL)
 			return ;
 		printf("FOR STRCPY. Just malloced %p\n", str_3[i]);
-	}
-	
+	}	
 	
 	for (int i = 0; i < nb_test; i++)
 	{
@@ -128,9 +127,10 @@ static void test_ft_strcpy()
 
 static void test_ft_strcmp()
 {
-	int nb_test = 5;
+	int nb_test = 6;
 	char *str_1[] = 
 	{
+		"\50",
 		"hello",
 		"",
 		"0hello",
@@ -140,14 +140,15 @@ static void test_ft_strcmp()
 
 	char *str_2[] = 
 	{
+		"\210",
 		"hello",
 		" ",
 		"0hello__",
 		"",
 		"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwhello"
 	};
-	int ret_c;
-	int ret_ft;
+	int ret_c = 0;
+	int ret_ft = 0;
 	
 	for (int i = 0; i < nb_test; i++)
 	{
