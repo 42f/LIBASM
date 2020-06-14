@@ -5,7 +5,7 @@ SRCS +=$(SRCS_DIR)ft_strlen.s
 SRCS +=$(SRCS_DIR)ft_read.s
 SRCS +=$(SRCS_DIR)ft_write.s
 SRCS +=$(SRCS_DIR)ft_strcmp.s
-#SRCS +=$(SRCS_DIR)ft_strcpy.s
+SRCS +=$(SRCS_DIR)ft_strcpy.s
 #SRCS +=$(SRCS_DIR)ft_strdup.s
 #SRCS +=$(SRCS_DIR)ft_strlen.s
 
@@ -29,7 +29,7 @@ CFLAGS = -Werror
 CFLAGS += -Wextra
 CFLAGS += -Wall
 CFLAGS += -g
-#CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 
 NAME = libasm.a
 
@@ -61,4 +61,4 @@ fclean: clean
 
 re: fclean $(NAME)
 
-.PHONY: all clean fclean re libasm objets test f
+.PHONY: all clean fclean re libasm objets test f main.c
