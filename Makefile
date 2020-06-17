@@ -45,10 +45,10 @@ $(NAME):	$(OBJS)
 	@echo "\n		🥳  Yay  !  $@ done.\n"
 
 $(OBJS):	%.o: %.s $(HEADER)
-	$(NA) $(NFLAGS) $< 
+	$(NA) -I $(INC_DIR) $(NFLAGS) $< 
 
 test: $(NAME) $(HEADER) main.c
-	$(CC) $(CFLAGS) -I $(INC_DIR) main.c -L. -lasm -o test
+	$(CC) $(CFLAGS) -I $(INC_DIR) main.c -lft -L. -lasm -o test
 
 f: test 
 	./test	

@@ -1,0 +1,15 @@
+%ifndef X86_64_FLAGS
+ %define X86_64_FLAGS
+; DEFINES FOR EFLAGS ID
+
+FLAG_CF		equ 0x0001
+FLAG_PF		equ 0x0004
+FLAG_AF		equ 0x0010
+FLAG_ZF		equ 0x0040
+FLAG_SF		equ 0x0080
+FLAG_TF		equ 0x0100
+FLAG_IF		equ 0x0200
+FLAG_DF		equ 0x0400
+FLAG_OF		equ 0x0800
+
+%endif
