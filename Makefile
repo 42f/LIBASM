@@ -6,8 +6,7 @@ SRCS +=$(SRCS_DIR)ft_read.s
 SRCS +=$(SRCS_DIR)ft_write.s
 SRCS +=$(SRCS_DIR)ft_strcmp.s
 SRCS +=$(SRCS_DIR)ft_strcpy.s
-#SRCS +=$(SRCS_DIR)ft_strdup.s
-#SRCS +=$(SRCS_DIR)ft_strlen.s
+SRCS +=$(SRCS_DIR)ft_strdup.s
 
 OBJS = $(SRCS:.s=.o)
 
@@ -48,7 +47,7 @@ $(OBJS):	%.o: %.s $(HEADER)
 	$(NA) -I $(INC_DIR) $(NFLAGS) $< 
 
 test: $(NAME) $(HEADER) main.c
-	$(CC) $(CFLAGS) -I $(INC_DIR) main.c -lft -L. -lasm -o test
+	$(CC) $(CFLAGS) -I $(INC_DIR) main.c -L. -lasm -o test
 
 f: test 
 	./test	

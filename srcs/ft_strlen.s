@@ -2,16 +2,14 @@ section .text
 	global ft_strlen
 
 ft_strlen:
-	mov rsi,rdi 		;store address of the argument (= address of str) in rsi and rax
-	mov rax, rdi		
+	mov rax, rdi		; put string address in rax	
 
-len_loop:				;loop until rsi is on '\0' and only inc rsi doing so
-	cmp byte [rsi], 0
+len_loop:				;loop until rax is on '\0' and only inc rax doing so
+	cmp byte [rax], 0
 	je end
-	inc rsi
+	inc rax
 	jmp len_loop
 
-end:					;substract the starting address stored in rax and the location of rsi (== '\0')
-	sub rsi, rax
-	mov rax, rsi		;mov the result in rax to return
+end:					;substract rdi address (stored in 
+	sub rax, rdi
 	ret

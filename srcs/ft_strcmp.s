@@ -12,19 +12,19 @@ ft_strcmp:
 	jz end_loop
 	cmp byte [rsi], 0
 	jz end_loop
-	mov r12b, [rsi]			; place dest byte in lower r12
-	cmp r12b, [rdi]			; compare dest and src byte
+	mov r8b, [rsi]			; place dest byte in lower r12
+	cmp r8b, [rdi]			; compare dest and src byte
 	je next_char			; loop to increment pointer
 
 end_loop:
 	mov al, [rdi]			; end the loop at the end of source or dest 
 	cmp al, [rsi]
 	jne ret_not_equal
-	xor rax, rax			; exit with zero if both string ended
+	xor rax, rax			; return zero if both string ended
 	ret
 
 ret_not_equal:
-	pushfq					; push eflags to stack
+	pushf					; push eflags to stack
 	pop rax
 	and rax, FLAG_SF		; get eflags in rax then logical AND to keep the SF
 	cmp rax, 0

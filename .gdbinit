@@ -7,9 +7,8 @@ define hook-kill
 end
 
 define hook-stop
-	x /s $rdi
-	x /c $rdi
-	x /s $rsi
-	x /c $rsi
-	c /d $rax
+	echo \nSTACK IN HEX \n
+	x/100x $sp
+	echo \nSTACK IN DECIMAL \n
+	x/30d $sp
 end
