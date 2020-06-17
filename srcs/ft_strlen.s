@@ -2,7 +2,7 @@ section .text
 	global ft_strlen
 
 ft_strlen:
-	mov rsi,rdi 		;store address of the argument (str) in rsi and rax
+	mov rsi,rdi 		;store address of the argument (= address of str) in rsi and rax
 	mov rax, rdi		
 
 len_loop:				;loop until rsi is on '\0' and only inc rsi doing so

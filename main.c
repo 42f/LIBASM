@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:01:02 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/17 09:28:41 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/17 09:31:30 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,8 +299,6 @@ static void test_ft_strcmp()
 		printf("[%s]\n[%s]\n", str_1[i], str_2[i]);
 		ret_ft = ft_strcmp(str_1[i], str_2[i]); 
 		ret_c =  strcmp(str_1[i], str_2[i]);
-		printf("RET ft= [%#10x]\n",ret_ft);	
-		printf("RET  c= [%#10x]\n",ret_c);	
 		printf(DARK);
 		printf("return _ft: %d\nreturn  _c: %d\n", ret_ft, ret_c);
 		if (ret_ft != ret_c)
