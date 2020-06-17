@@ -20,18 +20,11 @@ end_loop:
 	mov al, [rdi]			; end the loop at the end of source or dest 
 	cmp al, [rsi]
 	jne ret_not_equal
-	xor rax, rax			; return zero if both string ended
+	xor eax, eax			; return 0 if no difference after reaching the first '\0'
 	ret
 
-ret_not_equal:
-	pushf					; push eflags to stack
-	pop rax
-	and rax, FLAG_SF		; get eflags in rax then logical AND to keep the SF
-	cmp rax, 0
-	je ret_one				; return -1 if SF is on	
-	mov rax, -1
+ret_not_equal:				; substract the two different char to get return value
+	sub al, [rsi]
+	movsx rax, al			; extend the sign to all the register
 	ret
 
-ret_one:
-	mov rax, 1				; return +1 if SF is off
-	ret

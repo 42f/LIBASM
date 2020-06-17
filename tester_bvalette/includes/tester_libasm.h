@@ -22,5 +22,7 @@ void	test_ft_strcmp();
 void	test_ft_strcmp_long();
 void	test_ft_strcpy();
 void	test_ft_strcpy_long();
+void	test_ft_strdup();
+void	test_ft_strdup_long();
 
 #endif

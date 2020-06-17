@@ -1,14 +1,15 @@
 set history save on
-file test
-b ft_strcpy:5
+file /home/user42/42/repo/tester_bvalette/test
+b ft_strdup
 
 define hook-kill
     set confirm off
 end
 
 define hook-stop
+	i r
 	echo \nSTACK IN HEX \n
-	x/100x $sp
-	echo \nSTACK IN DECIMAL \n
-	x/30d $sp
+	x/20x $rdi - 10
+#	echo \nSTACK IN DECIMAL \n
+#	x/30d $sp
 end

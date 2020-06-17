@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 13:37:11 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/17 13:43:23 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/17 18:06:35 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,19 @@ void test_ft_strlen()
 {
 	int ret_ft = 0;
 	int ret_c = 0;
+	int nb_test = 6;
 
-	char *str[5] = 
+	char *str[6] = 
 	{
 		"hello",
 		"",
 		"0hello",
 		" ",
+		"4",
 		"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwhello"
 	};
-		
-	for (int i = 0; i < 5; i++)
+
+	for (int i = 0; i < nb_test; i++)
 	{
 		ret_ft = ft_strlen(str[i]);
 		ret_c = strlen(str[i]);

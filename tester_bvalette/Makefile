@@ -15,11 +15,12 @@ CC = clang
 
 CFLAGS = -Werror
 CFLAGS += -Wextra
-CFLAGS += -Wall -fsanitize=address -g
+CFLAGS += -Wall
+CFLAGS += -g
 
-DEBUG_FLAGS = $(CFLAGS)
-DEBUG_FLAGS += -fsanitize=address
-DEBUG_FLAGS += -g
+ifeq ($(DEBUG), 1)
+ CFLAGS += -fsanitize=address
+endif
 
 NAME = test
 
@@ -32,6 +33,7 @@ HEADER = $(INC_DIR)tester_libasm.h
 
 all: $(NAME)
 
+FORCE:
 	
 $(OBJS): %.o :%.c $(HEADER)
 	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@ 
@@ -42,23 +44,20 @@ $(LIBASM):
 $(NAME): $(LIBASM) $(HEADER) $(OBJS)
 	$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJS) -L ../ -lasm -o $(NAME) 
 
-debug: $(LIBASM) $(HEADER) $(OBJS)
-	$(CC) $(DEBUG_FLAGS) -I $(INC_DIR) $(OBJS) -L ../ -lasm -o $(NAME) 
-
 f: test 
 	./test	
 
-ft_strlen: $(NAME)
+ft_strlen: $(NAME) $(LIBASM) FORCE
 	./test $@
-ft_write: $(NAME)
+ft_write: $(NAME) $(LIBASM) FORCE
+	mmtest $@
+ft_read: $(NAME) $(LIBASM) FORCE
 	./test $@
-ft_read: $(NAME)
+ft_strcmp: $(NAME) $(LIBASM) FORCE
 	./test $@
-ft_strcmp: $(NAME)
+ft_strcpy: $(NAME) $(LIBASM) FORCE
 	./test $@
-ft_strcpy: $(NAME)
-	./test $@
-ft_strdup: $(NAME)
+ft_strdup: $(NAME) $(LIBASM) FORCE
 	./test $@
 
 clean:
@@ -66,6 +65,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME) test
+	make fclean -C ..
 
 re: fclean $(NAME)
 
