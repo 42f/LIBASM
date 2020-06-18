@@ -1,5 +1,3 @@
-%include "x86_64_flags.s"
-
 section .text
 	global ft_strcmp
 

@@ -1,9 +1,11 @@
+%include "x86_64_syscall.s"
+
 section .text
 	global ft_write
 	extern __errno_location
 
 ft_write:
-	mov rax, 1			; syscall id for write
+	mov rax, SYS_WRITE	; syscall id for write
 	syscall
 	cmp rax, 0			; check return
 	jl return_error
