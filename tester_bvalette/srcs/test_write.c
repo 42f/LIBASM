@@ -6,12 +6,58 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 13:37:18 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/17 22:07:30 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/18 13:55:02 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
 #include "tester_libasm.h"
+
+static void test_fd(int fd, char *str, int len)
+{
+	int ret_ft = 0;
+	int ret_c = 0;
+	int errno_ft = 0;
+	int errno_c = 0;
+		
+	printf(GREEN);
+	printf("\n\nTest with fd = %d \n", fd);
+	printf(RESET);
+	write(fd, "[", 1);
+	errno = 0;
+	ret_c = write(fd, str, len);
+	errno_c = errno;
+	write(fd, "]\n[", 3);
+	errno = 0;
+	ret_ft = ft_write(fd, str, len);
+	errno_ft = errno;	
+	write(fd, "]\n", 2);
+	printf("c  [%d]\n", errno);
+	printf("errno  : ft [%2d] | c [%2d] ", errno_ft, errno_c);
+	if (errno_ft == errno_c)
+	{
+		printf(GREEN);
+		printf("[✅]\n");
+	}
+	else
+	{
+		printf(RED);
+		printf("[⛔️KO !]\n");
+	}
+	printf(RESET);
+	printf("return : ft [%2d] | c [%2d] ", ret_ft, ret_c);
+	if (ret_ft == ret_c)
+	{
+		printf(GREEN);
+		printf("[✅]\n");
+	}
+	else
+	{
+		printf(RED);
+		printf("[⛔️KO !]\n");
+	}
+	printf(RESET);
+}
 
 /////////
 // FT_WRITE
@@ -19,9 +65,6 @@
 
 void test_ft_write()
 {
-	int ret_ft = 0;
-	int ret_c = 0;
-
 	char *str[5] = 
 	{
 		"hello",
@@ -31,32 +74,9 @@ void test_ft_write()
 		"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwhello"
 	};
 		
+	test_fd(4242, "yellow!\n", 8);
 	for (int i = 0; i < 5; i++)
-	{
-		
-		ft_write(1, "[", 1);
-		ft_write(1, str[i], strlen(str[i]));
-		ft_write(1, "]", 1);
-		ft_write(1, "\n", 1);
-	}
-	printf(GREEN);
-	printf("Test on fd /tmp/stdout\n");
-	printf(RESET);
-	int fd = open("/tmp/stdout", O_CREAT | O_WRONLY | O_APPEND, 0666);
-	
-	for (int i = 0; i < 5; i++)
-	{
-		ret_ft = ft_write(fd, str[i], strlen(str[i]));
-		printf("return : ft [%2d] | errno [%2d]\n", ret_ft, errno);
-		ret_c = write(fd, str[i], strlen(str[i]));
-		printf("return :  c [%2d] | errno [%2d]\n", ret_c, errno);
-	}
-	printf(GREEN);
-	printf("Test on wrong fd\n");
-	printf(RESET);
-	fd = 18902;
-	ret_ft = ft_write(fd, str[0], strlen(str[0]));
-	printf("return : ft [%2d] | errno [%2d]\n", ret_ft, errno);
-	ret_c = write(fd, str[0], strlen(str[0]));
-	printf("return :  c [%2d] | errno [%2d]\n", ret_c, errno);
+		test_fd(1, str[i], strlen(str[i]));
+	test_fd(1, "yellow!\n", 8);
+	test_fd(-1, "Hollow!\n", 8);
 }

@@ -34,7 +34,8 @@ HEADER = $(INC_DIR)tester_libasm.h
 all: $(NAME)
 
 FORCE:
-	
+	make
+
 $(OBJS): %.o :%.c $(HEADER)
 	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@ 
 
@@ -48,16 +49,21 @@ f: test
 	./test	
 
 ft_strlen: $(NAME) $(LIBASM) FORCE
+	make -C ../
 	./test $@
 ft_write: $(NAME) $(LIBASM) FORCE
-	mmtest $@
+	./test $@
 ft_read: $(NAME) $(LIBASM) FORCE
+	make -C ../
 	./test $@
 ft_strcmp: $(NAME) $(LIBASM) FORCE
+	make -C ../
 	./test $@
 ft_strcpy: $(NAME) $(LIBASM) FORCE
+	make -C ../
 	./test $@
 ft_strdup: $(NAME) $(LIBASM) FORCE
+	make -C ../
 	./test $@
 
 clean:
