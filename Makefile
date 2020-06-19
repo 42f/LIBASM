@@ -10,6 +10,11 @@ SRCS +=$(SRCS_DIR)ft_strdup.s
 
 OBJS = $(SRCS:.s=.o)
 
+SRCS_BONUS += $(SRCS_DIR)ft_atoi_base.s
+SRCS_BONUS += $(SRCS_DIR)ft_atoi_base_utils.s
+
+OBJS_BONUS = $(SRCS_BONUS:.s=.o)
+
 NA = nasm
 
 OS := $(shell uname -s)
@@ -28,7 +33,7 @@ CFLAGS = -Werror
 CFLAGS += -Wextra
 CFLAGS += -Wall
 CFLAGS += -g
-CFLAGS += -fsanitize=address
+#CFLAGS += -fsanitize=address
 
 NAME = libasm.a
 
@@ -36,7 +41,12 @@ INC_DIR = ./includes/
 
 HEADER = $(INC_DIR)libasm.h
 
-all :		$(NAME)
+all: $(NAME)
+
+bonus: $(OBJS) $(OBJS_BONUS)
+	@echo "\n		🔗 Linking $@'s objects files...\n"
+	ar rcs $(NAME) $^
+	@echo "\n		🥳  Yay  !  $@ done.\n"
 
 $(NAME):	$(OBJS)
 	@echo "\n		🔗 Linking $@'s objects files...\n"
@@ -46,18 +56,17 @@ $(NAME):	$(OBJS)
 $(OBJS):	%.o: %.s $(HEADER)
 	$(NA) -I $(INC_DIR) $(NFLAGS) $< 
 
-test: $(NAME) $(HEADER) main.c
-	$(CC) $(CFLAGS) -I $(INC_DIR) main.c -L. -lasm -o test
-
-f: test 
-	./test	
+$(OBJS_BONUS):	%.o: %.s $(HEADER) 
+	$(NA) -I $(INC_DIR) $(NFLAGS) $< 
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(OBJS_BONUS)
 
 fclean: clean
-	$(RM) $(NAME) test
+	$(RM) $(NAME) $(NAME_BONUS)
 
 re: fclean $(NAME)
+
+re_bonus: fclean bonus
 
 .PHONY: all clean fclean re libasm objets test f main.c

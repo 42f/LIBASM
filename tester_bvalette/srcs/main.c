@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:01:02 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/17 15:56:25 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/18 18:29:09 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,12 @@ int main(int ac, char **av)
 	{
 		print_split("FT_STRDUP_LONG");
 		test_ft_strdup_long();
+	}
+
+	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_atoi_base") == 0))
+	{
+		print_split("FT_ATOI_BASE");
+		test_ft_atoi_base();
 	}
 
 	return (0);

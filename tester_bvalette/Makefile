@@ -8,6 +8,7 @@ SRCS +=$(SRCS_DIR)test_write.c
 SRCS +=$(SRCS_DIR)test_strcmp.c
 SRCS +=$(SRCS_DIR)test_strcpy.c
 SRCS +=$(SRCS_DIR)test_strdup.c
+SRCS +=$(SRCS_DIR)test_atoi_base.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -34,13 +35,13 @@ HEADER = $(INC_DIR)tester_libasm.h
 all: $(NAME)
 
 FORCE:
-	make
+	make bonus -C ../
 
 $(OBJS): %.o :%.c $(HEADER)
 	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@ 
 
 $(LIBASM):
-	make -C ../
+	make bonus -C ../
 
 $(NAME): $(LIBASM) $(HEADER) $(OBJS)
 	$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJS) -L ../ -lasm -o $(NAME) 
@@ -48,24 +49,20 @@ $(NAME): $(LIBASM) $(HEADER) $(OBJS)
 f: test 
 	./test	
 
-ft_strlen: $(NAME) $(LIBASM) FORCE
-	make -C ../
+ft_atoi_base: FORCE $(NAME)
 	./test $@
-ft_write: $(NAME) $(LIBASM) FORCE
+ft_strlen: FORCE $(NAME)
 	./test $@
-ft_read: $(NAME) $(LIBASM) FORCE
-	make -C ../
+ft_write: FORCE $(NAME)
 	./test $@
-ft_strcmp: $(NAME) $(LIBASM) FORCE
-	make -C ../
+ft_read: FORCE $(NAME)
 	./test $@
-ft_strcpy: $(NAME) $(LIBASM) FORCE
-	make -C ../
+ft_strcmp: FORCE $(NAME)
 	./test $@
-ft_strdup: $(NAME) $(LIBASM) FORCE
-	make -C ../
+ft_strcpy: FORCE $(NAME)
 	./test $@
-
+ft_strdup: FORCE $(NAME)
+	./test $@
 clean:
 	$(RM) $(OBJS)
 
