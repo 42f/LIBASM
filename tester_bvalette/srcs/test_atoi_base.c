@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/18 18:29:53 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/20 17:29:53 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 void test_ft_atoi_base()
 {
-	ft_atoi_base("abc", "abc");
-
+	int ret;
+	ret = ft_atoi_base("aaaa", "abc");
+	printf("return = %d\n", ret);
 }
+

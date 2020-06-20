@@ -12,9 +12,51 @@ show logging
 file /home/user42/42/repo/tester_bvalette/test
 b ft_atoi_base
 
-define reboot
-	kill
-	run
+define x_c
+    set var $repeatCount=$rbp - $rsp + 8 
+    eval "x/-32xc $rsp"
+	echo ______________________________________________ STACK FRAME START\n 
+    eval "x/%dxc $rsp", $repeatCount 
+	echo ______________________________________________ STACK FRAME END\n 
+    eval "x/32xc $rbp"
+end
+define x_b
+    set var $repeatCount=$rbp - $rsp + 8 
+    eval "x/-32xb $rsp"
+	echo ______________________________________________ STACK FRAME START\n 
+    eval "x/%dxb $rsp", $repeatCount 
+	echo ______________________________________________ STACK FRAME END\n 
+    eval "x/32xb $rbp"
+end
+
+define x_d
+    set var $repeatCount=$rbp - $rsp + 8 
+    set var $repeatCount=$repeatCount / 8
+    eval "x/-16d $rsp"
+	echo ______________________________________________ STACK FRAME START\n 
+    eval "x/%dd $rsp", $repeatCount 
+	echo ______________________________________________ STACK FRAME END\n 
+    eval "x/16d $rbp"
+end
+
+define x_s
+    set var $repeatCount=$rbp - $rsp + 8 
+    set var $repeatCount=$repeatCount / 8
+    eval "x/-16s $rsp"
+	echo ______________________________________________ STACK FRAME START\n 
+    eval "x/%ds $rsp", $repeatCount 
+	echo ______________________________________________ STACK FRAME END\n 
+    eval "x/16s $rbp"
+end
+
+define xcmd_iterative
+    set var $repeatCount=$rbp - $rsp + 8 
+    set var $repeatCount=$repeatCount / 8
+    eval "x/-16xg $rsp"
+	echo ______________________________________________ STACK FRAME START\n 
+    eval "x/%dxg $rsp", $repeatCount 
+	echo ______________________________________________ STACK FRAME END\n 
+    eval "x/16xg $rbp"
 end
 
 define hook-kill
@@ -22,22 +64,30 @@ define hook-kill
 end
 
 define clean
-	kill
 	shell clear
+	kill
+	source .gdbinit
 	shell true > /tmp/diff
+	shell true > /tmp/gdboutput
+	shell true > /tmp/gdboutput_new
+end
+
+define myFun_stop
+	shell true > /tmp/gdboutput_new
+	i r
+	printf "\nSTACK base  => %#lx\n", $rbp  
+	printf "STACK point => %#lx\n", $rsp
+	printf "STACK range => %#d\n", $rbp - $rsp
+	printf "\nSTACK IN HEX from rsp\n"
+	xcmd_iterative 
+	if $argc == 0
+		shell true > /tmp/gdboutput
+	end
 end
 
 define hook-stop
-	shell true > /tmp/gdboutput_new
-	info line
-	i r
-	echo \nSTACK base - peak : \n
-	p/x $rsp 
-	p/x $rbp 
-	echo \nSTACK IN HEX from rsp\n
-	x/32x $rsp
-	info line
-	echo NEXT\n
+	printf "\n\n\n"
+	myFun_stop log
 	shell sed 's/\x0//g' /tmp/gdboutput > /tmp/gdboutput_new
 	shell diff --color -y --text /tmp/gdboutput_old /tmp/gdboutput_new > /tmp/diff
 	shell cat /tmp/gdboutput_new > /tmp/gdboutput_old

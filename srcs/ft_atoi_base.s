@@ -10,9 +10,14 @@ ft_atoi_base:
 
 	push rdi
 	push rsi
+	mov rdi, rsi
 	call ft_check_base_validity
 	pop rsi
 	pop rdi
+	ret
+
+
+
 	cmp rax, 1
 	jne return_error
 
