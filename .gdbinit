@@ -1,4 +1,5 @@
 shell touch /tmp/gdboutput
+shell touch /tmp/gdboutput_history
 shell touch /tmp/gdboutput_old
 shell touch /tmp/gdboutput_new
 shell touch /tmp/diff
@@ -94,6 +95,7 @@ define hook-stop
 	printf "\n\n\n"
 	myFun_stop log
 	shell sed 's/\x0//g' /tmp/gdboutput > /tmp/gdboutput_new
+	shell cat /tmp/gdboutput >> /tmp/gdboutput_history
 	shell diff --color -y --text /tmp/gdboutput_old /tmp/gdboutput_new > /tmp/diff
 	shell cat /tmp/gdboutput_new > /tmp/gdboutput_old
 	shell true > /tmp/gdboutput

@@ -1,8 +1,8 @@
 section .text
 	global ft_atoi_base
-	extern ft_check_base_validity
-	extern ft_skip_chars
-	extern ft_convert
+	extern ft_atoi_base_check_base
+	extern ft_atoi_base_skip_chars
+	extern ft_atoi_base_convert
 	extern ft_strlen
 
 ft_atoi_base:
@@ -18,13 +18,13 @@ ft_atoi_base:
 	push rsi
 	mov rdi, rsi
 	
-	call ft_check_base_validity
+	call ft_atoi_base_check_base
 	pop rsi
 	pop rdi
 	cmp rax, 0
 	je return_error
 	
-	call ft_skip_chars
+	call ft_atoi_base_skip_chars
 	cmp rax, 0
 	je return_error
 	
@@ -34,7 +34,7 @@ ft_atoi_base:
 	mov rdx, rax
 
 	pop rdi
-	call ft_convert			; convert, takes rdi=str, rsi=base, rdx=base_len
+	call ft_atoi_base_convert			; convert, takes rdi=str, rsi=base, rdx=base_len
 	jmp return
 	
 return_valid:
