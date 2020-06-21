@@ -8,9 +8,13 @@ set logging file /tmp/gdboutput
 set logging on
 show logging
 
-
 file /home/user42/42/repo/tester_bvalette/test
-b ft_atoi_base
+display /s $rdi
+display /s $rsi
+display /d $rax
+display /d $rcx
+
+b ft_atoi_base.s:28
 
 define x_c
     set var $repeatCount=$rbp - $rsp + 8 
@@ -75,6 +79,7 @@ end
 define myFun_stop
 	shell true > /tmp/gdboutput_new
 	i r
+	display
 	printf "\nSTACK base  => %#lx\n", $rbp  
 	printf "STACK point => %#lx\n", $rsp
 	printf "STACK range => %#d\n", $rbp - $rsp

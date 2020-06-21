@@ -13,6 +13,8 @@ OBJS = $(SRCS:.s=.o)
 SRCS_BONUS += $(SRCS_DIR)ft_atoi_base.s
 SRCS_BONUS += $(SRCS_DIR)ft_atoi_base_utils.s
 SRCS_BONUS += $(SRCS_DIR)ft_atoi_base_skip.s
+SRCS_BONUS += $(SRCS_DIR)ft_atoi_base_convert.s
+SRCS_BONUS += $(SRCS_DIR)ft_strchr.s
 
 OBJS_BONUS = $(SRCS_BONUS:.s=.o)
 
