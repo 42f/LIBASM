@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/21 17:49:36 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/21 18:15:51 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void test_ft_atoi_base()
 	char *test[] = 
 	{
 		"1346", "542", "0123456789ABCDEF",
-		"66", "	42", "0123456789ABCDEF",
 		"66", "42", "0123456789ABCDEF",
 		"1346", " 542", "0123456789ABCDEF",
 		"1346", "      542 ", "0123456789ABCDEF",
@@ -36,7 +35,8 @@ void test_ft_atoi_base()
 		"1", "   1", "0123456789ABCDEF",
 		"1", "   -1", "0123456789ABCDEF",
 		"5", " xyz", "xyz",
-
+		"66", "	42", "0123456789ABCDEF",
+		
 		"0", "x", "",
 		"0", "x", " ",
 		"0", "x", "x",
@@ -45,6 +45,8 @@ void test_ft_atoi_base()
 		"0", "xxx", "xyz-",
 		"0", "xxx", "x+yz",
 		"0", "xxx", "x yz",
+		"0", "0", "0123456789ABCDEF",
+		"15", "F", "0123456789ABCDEF",
 		"0", "", "0123456789ABCDEF",
 		"0", NULL, "0123456789ABCDEF",
 		"0", "42", NULL
@@ -60,7 +62,10 @@ void test_ft_atoi_base()
 		printf(DARK"Test #%2d : [%-14s] BASE [%16s]"RESET, i / 3, test[i + 1], test[i + 2]);
 		if (expected_ret == ret)
 		{
-			printf(GREEN);
+			if (*test[i] != '0')
+				printf(GREEN);
+			else
+				printf(DARK);
 			printf("expecting [%5d] return = %5d --> ", expected_ret, ret);
 			printf("[✅]\n");
 		}
