@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:01:02 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/21 08:46:07 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/22 15:58:24 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,60 +33,82 @@ static void	print_split(char *str)
 
 int main(int ac, char **av)
 {
+	int error = 0;
 	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_strlen") == 0))
 	{
 		print_split("FT_STRLEN");
-		test_ft_strlen();
+		error += test_ft_strlen();
 	}
 	
 	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_write") == 0))
 	{
 		print_split("FT_WRITE => write on stdout");
-		test_ft_write();
+		error += test_ft_write();
 	}
 		
 	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_read") == 0))
 	{
 		print_split("FT_READ => from a file");
-		test_ft_read();
+		error += test_ft_read();
 	}
 	
 	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_strcmp") == 0))
 	{
 		print_split("FT_STRCMP");
-		test_ft_strcmp();
+		error += test_ft_strcmp();
 	}
 
 	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_strcpy_long") == 0))
 	{
 		print_split("FT_STRCPY_LONG");
-		test_ft_strcpy_long();
+		error += test_ft_strcpy_long();
 	}
 
 	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_strcpy") == 0))
 	{
 		print_split("FT_STRCPY");
-		test_ft_strcpy();
+		error += test_ft_strcpy();
 	}
 
 	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_strdup") == 0))
 	{
 		print_split("FT_STRDUP");
-		test_ft_strdup();
+		error += test_ft_strdup();
 	}
 
 	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_strdup_long") == 0))
 	{
 		print_split("FT_STRDUP_LONG");
-		test_ft_strdup_long();
+		error += test_ft_strdup_long();
 	}
 
 	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_atoi_base") == 0))
 	{
 		print_split("FT_ATOI_BASE");
-		test_ft_atoi_base();
+		error += test_ft_atoi_base();
 	}
 
+	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_list_push_front") == 0))
+	{
+		print_split("FT_LIST_PUSH_FRONT");
+		error += test_ft_list_push_front();
+	}
+
+	print_split("TESTS RESULT");
+	if (error == 0)
+	{
+		printf(GREEN);
+		printf("\t\t\t[PASSED] ✅\n");
+		printf("\t\t\t[%d] errors\n\n\n", error);
+	}
+	else
+	{
+		printf(RED);
+		printf("\t\t\t[FAILED] ⛔️\a");
+		printf("\t\t\t[%d] errors\n\n\n", error);
+		error++;
+	}
+	
 	return (0);
 }
 

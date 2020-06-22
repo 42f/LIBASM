@@ -3,13 +3,13 @@ section .text
 	extern ft_strlen
 
 ft_strcpy:
+	push rbp
+	mov rbp, rsp
 
 	push rdi
 	push rsi
 	mov rdi, rsi			;place rsi in rdi to make
-
 	call ft_strlen			;the first arg for ft_strlen
-
 	pop rsi
 	pop rdi
 	push rdi				;save rdi in stack to return it later
@@ -18,4 +18,7 @@ ft_strcpy:
 	mov rcx, rax			;use len as counter for rep prefix
 	rep movsb				;mov RCX bytes from rsi to rdi
 	pop rax 				;pop the address of rdi into rax to return
+	
+	mov rsp, rbp
+	pop rbp
 	ret

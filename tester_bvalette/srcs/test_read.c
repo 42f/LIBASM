@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 13:36:46 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/18 12:40:33 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/22 11:48:48 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 // FT_READ
 ////////
 
-static void test_fd(int fd, int buf_size, char *buf_ft, char *buf_c)
+static int test_fd(int fd, int buf_size, char *buf_ft, char *buf_c)
 {
 	int ret_ft = 0;
 	int ret_c = 0;
 	int errno_ft = 0;
 	int errno_c = 0;
+	int error = 0;
 		
 	printf(GREEN);
 	printf("\n\nTest with fd = %d \n", fd);
@@ -44,6 +45,7 @@ static void test_fd(int fd, int buf_size, char *buf_ft, char *buf_c)
 	{
 		printf(RED);
 		printf("[⛔️KO !]\n");
+		error++;
 	}
 	printf(RESET);
 	printf("return : ft [%2d] | c [%2d] ", ret_ft, ret_c);
@@ -56,12 +58,14 @@ static void test_fd(int fd, int buf_size, char *buf_ft, char *buf_c)
 	{
 		printf(RED);
 		printf("[⛔️KO !]\n");
+		error++;
 	}
 	printf(RESET);
+	return (error);
 }
 
 
-void test_ft_read()
+int test_ft_read()
 {
 	unsigned int fd = open("./files/alpha3.txt", O_RDONLY);
 	int buf_size = 2048;
@@ -69,6 +73,7 @@ void test_ft_read()
 	char buf_c[buf_size];
 	int ret_ft = 0;
 	int ret_c = 0;
+	int error = 0;
 	
 	errno = 0;
 	ret_c = read(fd, &buf_c, buf_size);
@@ -88,7 +93,7 @@ void test_ft_read()
 	printf("buff =\n%s\n\n", buf_ft);
 	printf(RESET);
 
-	test_fd(12345, buf_size, buf_ft, buf_c);
-	test_fd(-1, buf_size, buf_ft, buf_c);
-
+	error += test_fd(12345, buf_size, buf_ft, buf_c);
+	error += test_fd(-1, buf_size, buf_ft, buf_c);
+	return (error);
 }

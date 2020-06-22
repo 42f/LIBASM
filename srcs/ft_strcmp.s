@@ -1,11 +1,16 @@
 section .text
 	global ft_strcmp
 
+ft_strcmp:
+	push rbp
+	mov rbp, rsp
+	jmp cmp_loop
+
 next_char:
 	inc rdi
 	inc rsi
 
-ft_strcmp:
+cmp_loop:
 	cmp byte [rdi], 0		; check for 0 in source and dest
 	jz end_loop
 	cmp byte [rsi], 0
@@ -17,12 +22,17 @@ ft_strcmp:
 end_loop:
 	mov al, [rdi]			; end the loop at the end of source or dest 
 	cmp al, [rsi]
-	jne ret_not_equal
-	xor eax, eax			; return 0 if no difference after reaching the first '\0'
-	ret
+	jne return_invalid
 
-ret_not_equal:				; substract the two different char to get return value
+return_invalid:				; substract the two different char to get return value
 	sub al, [rsi]
 	movsx rax, al			; extend the sign to all the register
-	ret
+	jmp return
 
+return_valid:
+	xor rax, rax			; return 0 if no difference after reaching the first '\0
+
+return:
+	mov rsp, rbp
+	pop rbp
+	ret

@@ -37,11 +37,6 @@ ft_atoi_base:
 	call ft_atoi_base_convert			; convert, takes rdi=str, rsi=base, rdx=base_len
 	jmp return
 	
-return_valid:
-	xor rax, rax
-	inc rax
-	jmp return	
-
 return_error:
 	xor rax, rax
 

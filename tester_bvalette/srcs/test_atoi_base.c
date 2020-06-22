@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/21 18:15:51 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/22 11:46:48 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 /// FT_atoi_base
 ////////
 
-void test_ft_atoi_base()
+int test_ft_atoi_base()
 {
 	int ret = 0;
-
+	int error = 0;
 
 //  [expected return], [ft_atoi_base str arg], [ft_atoi_base base arg]
 	char *test[] = 
@@ -74,8 +74,10 @@ void test_ft_atoi_base()
 			printf(RED);
 			printf("expecting [%5d] return = %5d --> ", expected_ret, ret);
 			printf("[⛔️KO !]\n");
+			error++;
 		}
 		printf(RESET);
 	}
+	return (error);
 }
 

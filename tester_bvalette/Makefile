@@ -9,6 +9,7 @@ SRCS +=$(SRCS_DIR)test_strcmp.c
 SRCS +=$(SRCS_DIR)test_strcpy.c
 SRCS +=$(SRCS_DIR)test_strdup.c
 SRCS +=$(SRCS_DIR)test_atoi_base.c
+SRCS +=$(SRCS_DIR)test_list_push_front.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -46,7 +47,7 @@ $(LIBASM):
 $(NAME): $(LIBASM) $(HEADER) $(OBJS)
 	$(CC) $(CFLAGS) -I $(INC_DIR) $(OBJS) -L ../ -lasm -o $(NAME) 
 
-f: test 
+f: FORCE $(NAME) 
 	./test	
 
 ft_atoi_base: FORCE $(NAME)
@@ -62,6 +63,8 @@ ft_strcmp: FORCE $(NAME)
 ft_strcpy: FORCE $(NAME)
 	./test $@
 ft_strdup: FORCE $(NAME)
+	./test $@
+ft_list_push_front: FORCE $(NAME)
 	./test $@
 clean:
 	$(RM) $(OBJS)

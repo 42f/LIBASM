@@ -5,6 +5,8 @@ section .text
 	extern malloc
 
 ft_strdup:
+	push rbp
+	mov rbp, rsp
 
 	push rdi		;save rdi (== 1st function argument)
 	xor rax, rax
@@ -15,13 +17,17 @@ ft_strdup:
 	mov rdi, rax	;put len to malloc's 1st arg (==rdi)
 	call malloc
 	cmp rax, 0		;check malloc return
-	je ret_error	
+	je return_invalid
 	
 	pop rsi			;give rdi to ft_strcpy dest argument
 	mov rdi, rax	;place malloced pointer in ft_strcpy's src argument
 	call ft_strcpy
-	ret
+	jmp return
 
-ret_error:
-	xor eax, eax
+return_invalid:
+	xor rax, rax
+
+return:
+	mov rsp, rbp
+	pop rbp
 	ret

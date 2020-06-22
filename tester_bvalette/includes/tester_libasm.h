@@ -16,15 +16,20 @@
 #include <errno.h>
 
 
-void	test_ft_strlen();
-void	test_ft_write();
-void	test_ft_read();
-void	test_ft_strcmp();
-void	test_ft_strcmp_long();
-void	test_ft_strcpy();
-void	test_ft_strcpy_long();
-void	test_ft_strdup();
-void	test_ft_strdup_long();
-void	test_ft_atoi_base();
-
+int	test_ft_strlen();
+int	test_ft_write();
+int	test_ft_read();
+int	test_ft_strcmp();
+int	test_ft_strcmp_long();
+int	test_ft_strcpy();
+int	test_ft_strcpy_long();
+int	test_ft_strdup();
+int	test_ft_strdup_long();
+int	test_ft_atoi_base();
+int	test_ft_list_push_front();
+/*
+int	test_ft_list_size();
+int	test_ft_list_sort();
+int	test_ft_list_remove_if();
+*/
 #endif

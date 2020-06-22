@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 13:36:39 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/17 14:07:38 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/22 12:07:04 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 /// FT_STRCMP long test
 ////////
 
-void test_ft_strcmp_long()
+int test_ft_strcmp_long()
 {
-
+	int error = 0;
 	size_t buf_size = 1000000000;
 	char *str_1[2];
 	int fd = 0;
@@ -36,7 +36,7 @@ void test_ft_strcmp_long()
 			printf(RED);
 			printf("ERROR FILE TEST");
 			printf(RESET);
-			return ;
+			return (0);
 		}
 		str_1[i] = (char *)calloc(sizeof(char), buf_size + 1);
 		ret = read(fd, str_1[i], buf_size);
@@ -45,7 +45,7 @@ void test_ft_strcmp_long()
 			printf(RED);
 			printf("ERROR FILE TEST");
 			printf(RESET);
-			return ;
+			return (0);
 		}
 		close(fd);
 		fd = 0;
@@ -65,6 +65,7 @@ void test_ft_strcmp_long()
 	{
 		printf(RED);
 		printf("\n\n[⛔️KO !] For very long string\n");
+		error++;
 	}
 	printf(RESET);
 	printf("FT_ returns %d \n  src[%.10s] .... (+ %zu char)\n=>dst[%.10s] .... (+ %zu char)\n", ret_ft, str_1[0], len - 10, str_1[1], len - 10);
@@ -72,14 +73,16 @@ void test_ft_strcmp_long()
 	printf(" C_ returns %d \n  src[%.10s] .... (+ %zu char)\n=>dst[%.10s] .... (+ %zu char)\n", ret_c, str_1[0], len - 10, str_1[1], len - 10);
 	free(str_1[1]);
 	free(str_1[0]);
+	return (error);
 }
 /////////
 // FT_STRCMP
 // non-null argument mandatory on c function
 ////////
 
-void test_ft_strcmp()
+int test_ft_strcmp()
 {
+	int error = 0;
 	int nb_test = 6;
 	char *str_1[] = 
 	{
@@ -119,8 +122,10 @@ void test_ft_strcmp()
 		{
 			printf(RED);
 			printf("[⛔️KO !]\n\n");
+			error++;
 		}
 		printf(RESET);
 	}
-	test_ft_strcmp_long();
+	error += test_ft_strcmp_long();
+	return (error);
 }

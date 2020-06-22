@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 14:36:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/17 16:47:45 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/22 12:49:35 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 /// FT_STRCMP long test
 ////////
 
-void test_ft_strdup_long()
+int test_ft_strdup_long()
 {
-
+	int error = 0;
 	char *ret_ft = NULL;
 	char *ret_c = NULL;
 	size_t buf_size = 10000000;
@@ -36,7 +36,7 @@ void test_ft_strdup_long()
 		printf(RED);
 		printf("ERROR FILE TEST");
 		printf(RESET);
-		return ;
+		return (0);
 	}
 	str_1 = (char *)calloc(sizeof(char),(buf_size + 1));
 	if (str_1 == NULL)
@@ -44,7 +44,7 @@ void test_ft_strdup_long()
 		printf(RED);
 		printf("ERROR CALLOC");
 		printf(RESET);
-		return ;
+		return (0);
 	}
 	ret = read(fd, str_1, buf_size);
 	if (ret < 0)
@@ -53,7 +53,7 @@ void test_ft_strdup_long()
 		printf(RED);
 		printf("ERROR FILE TEST");
 		printf(RESET);
-		return ;
+		return (0);
 	}
 	close(fd);
 		
@@ -63,14 +63,16 @@ void test_ft_strdup_long()
 		printf(RED);
 		printf("\n\n[⛔️KO !]  => LIBFT FUNCTION Returned NULL pointer");
 		free(ret_c);
-		return ;
+		error++;
+		return (error);
 	}
 	ret_c =  strdup(str_1);
 	if (ret_c == NULL)
 	{
 		printf(RED);
 		printf("\n\n[⛔️KO !]  => LIBC FUNCTION Returned NULL pointer");
-		return ;
+		error++;
+		return (error);
 	}
 	len_src = strlen(str_1);
 	len_ft = strlen(ret_ft);
@@ -84,6 +86,7 @@ void test_ft_strdup_long()
 	{
 		printf(RED);
 		printf("\n\n[%d][⛔️KO !] For very long string\n",	strcmp(ret_ft, ret_c));
+		error++;
 	}
 	printf(RESET);
 	printf("FT_ \n  src[%.10s] .... (+ %zu char)\n=>dst[%.10s] .... (+ %zu char)\n", str_1, len_src, ret_ft, len_ft);
@@ -94,6 +97,7 @@ void test_ft_strdup_long()
 	free(str_1);
 	free(ret_c);
 	free(ret_ft);
+	return (error);
 }
 
 
@@ -101,8 +105,9 @@ void test_ft_strdup_long()
 /// FT_STRCMP long test
 ////////
 
-void test_ft_strdup()
+int test_ft_strdup()
 {
+	int error = 0;
 	int nb_test = 5;
 	char *ret_ft = NULL;
 	char *ret_c = NULL;
@@ -122,7 +127,7 @@ void test_ft_strdup()
 		{
 			printf(RED);
 			printf("\n\n[⛔️KO !]  => LIBC FUNCTION Returned NULL pointer");
-			return ;
+			return (0);
 		}
 		ret_ft = ft_strdup(str_1[i]); 
 		if (ret_ft == NULL)
@@ -130,7 +135,7 @@ void test_ft_strdup()
 			printf(RED);
 			printf("\n\n[⛔️KO !]  => LIBFT FUNCTION Returned NULL pointer");
 			free(ret_c);
-			return ;
+			return (0);
 		}
 
 		if (strcmp(ret_ft, str_1[i]) == 0)
@@ -142,6 +147,7 @@ void test_ft_strdup()
 		{
 			printf(RED);
 			printf("\n\n[⛔️KO !] ");
+			error++;
 		}
 		printf(RESET);
 		printf("FT_ \n  src[%s]\n=>dst[%s]\n", str_1[i], ret_ft);
@@ -153,5 +159,6 @@ void test_ft_strdup()
 		free (ret_ft);
 	}
 	printf(RESET);
-	test_ft_strdup_long();
+	error += test_ft_strdup_long();
+	return (error);
 }

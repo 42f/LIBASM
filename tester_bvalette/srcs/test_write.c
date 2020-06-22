@@ -6,15 +6,16 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 13:37:18 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/18 13:55:02 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/22 12:05:11 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
 #include "tester_libasm.h"
 
-static void test_fd(int fd, char *str, int len)
+static int test_fd(int fd, char *str, int len)
 {
+	int error = 0;
 	int ret_ft = 0;
 	int ret_c = 0;
 	int errno_ft = 0;
@@ -43,6 +44,7 @@ static void test_fd(int fd, char *str, int len)
 	{
 		printf(RED);
 		printf("[⛔️KO !]\n");
+		error++;
 	}
 	printf(RESET);
 	printf("return : ft [%2d] | c [%2d] ", ret_ft, ret_c);
@@ -55,16 +57,20 @@ static void test_fd(int fd, char *str, int len)
 	{
 		printf(RED);
 		printf("[⛔️KO !]\n");
+		error++;
 	}
 	printf(RESET);
+	return (error);
 }
 
 /////////
 // FT_WRITE
 ////////
 
-void test_ft_write()
+int test_ft_write()
 {
+	int error = 0;
+
 	char *str[5] = 
 	{
 		"hello",
@@ -74,9 +80,12 @@ void test_ft_write()
 		"wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwhello"
 	};
 		
-	test_fd(4242, "yellow!\n", 8);
 	for (int i = 0; i < 5; i++)
-		test_fd(1, str[i], strlen(str[i]));
-	test_fd(1, "yellow!\n", 8);
-	test_fd(-1, "Hollow!\n", 8);
+		error += test_fd(1, str[i], strlen(str[i]));
+
+	error += test_fd(4242, "yellow!\n", 8);
+	error += test_fd(1, "yellow!\n", 8);
+	error += test_fd(-1, "Hollow!\n", 8);
+
+	return (error);
 }

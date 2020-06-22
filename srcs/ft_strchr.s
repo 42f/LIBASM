@@ -19,12 +19,12 @@ check_loop:
 	inc rsi
 	jmp check_loop	
 
-return_valid:
-	mov rax, rsi
-	jmp return
-
 return_invalid:
 	xor rax, rax
+	jmp return
+
+return_valid:
+	mov rax, rsi
 	
 return:
 	pop rdi

@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 13:36:56 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/17 16:05:59 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/22 12:48:56 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 /// FT_STRCPY long test
 ////////
 
-void test_ft_strcpy_long()
+int test_ft_strcpy_long()
 {
 
 	char *ret_ft = NULL;
@@ -31,6 +31,7 @@ void test_ft_strcpy_long()
 	size_t len_src = 0;
 	size_t len_ft = 0;
 	size_t len_c = 0;
+	int error = 0;
 
 	fd = open("./files/large_file.txt", O_RDONLY);
 	if (fd <= 2)
@@ -38,7 +39,7 @@ void test_ft_strcpy_long()
 		printf(RED);
 		printf("ERROR FILE TEST");
 		printf(RESET);
-		return ;
+		return (0);
 	}
 	str_1 = (char *)calloc(sizeof(char), buf_size + 1);
 	ret = read(fd, str_1, buf_size);
@@ -47,7 +48,7 @@ void test_ft_strcpy_long()
 		printf(RED);
 		printf("ERROR FILE TEST");
 		printf(RESET);
-		return ;
+		return (0);
 	}
 	close(fd);
 	len_src = strlen(str_1);
@@ -58,7 +59,7 @@ void test_ft_strcpy_long()
 		printf(RED);
 		printf("ERROR MALLOC");
 		printf(RESET);
-		return ;
+		return (0);
 	}
 	printf("FOR FT_STRCPY. Just malloced %p\n", str_2);
 	printf("FOR    STRCPY. Just malloced %p\n", str_3);
@@ -78,6 +79,7 @@ void test_ft_strcpy_long()
 	{
 		printf(RED);
 		printf("\n\n[⛔️KO !] For very long string\n");
+		error++;
 	}
 	printf(RESET);
 	printf(RESET);
@@ -89,6 +91,7 @@ void test_ft_strcpy_long()
 	free(str_1);
 	free(str_3);
 	free(str_2);
+	return (error);
 }
 
 /////////
@@ -96,8 +99,9 @@ void test_ft_strcpy_long()
 // non-null argument mandatory on c function
 ////////
 
-void test_ft_strcpy()
+int test_ft_strcpy()
 {
+	int error = 0;
 	int nb_test = 5;
 	char *ret_ft = NULL;
 	char *ret_c = NULL;
@@ -116,7 +120,7 @@ void test_ft_strcpy()
 	{
 		str_2[i] = (char*)malloc(sizeof(char) * (strlen(str_1[i]) + 1));
 		if (str_2[i] == NULL)
-			return ;
+			return (0);
 		printf("FOR FT_STRCPY. Just malloced %p\n", str_2[i]);
 	}
 	
@@ -125,7 +129,7 @@ void test_ft_strcpy()
 	{
 		str_3[i] = (char*)malloc(sizeof(char) * (strlen(str_1[i]) + 1));
 		if (str_3[i] == NULL)
-			return ;
+			return (0);
 		printf("FOR STRCPY. Just malloced %p\n", str_3[i]);
 	}	
 	
@@ -142,6 +146,7 @@ void test_ft_strcpy()
 		{
 			printf(RED);
 			printf("\n\n[⛔️KO !] ");
+			error++;
 		}
 		printf(RESET);
 		printf("FT_ \n  src[%s]\n=>dst[%s]\n", str_1[i], ret_ft);
@@ -153,6 +158,8 @@ void test_ft_strcpy()
 		free(str_2[i]);
 		}
 		printf(RESET);
-		test_ft_strcpy_long();
+		error += test_ft_strcpy_long();
+
+		return (error);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 13:37:11 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/17 18:06:35 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/22 11:56:09 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@
 // FT_STRLEN
 ////////
 
-void test_ft_strlen()
+int test_ft_strlen()
 {
 	int ret_ft = 0;
 	int ret_c = 0;
 	int nb_test = 6;
+	int error = 0;
 
 	char *str[6] = 
 	{
@@ -42,6 +43,7 @@ void test_ft_strlen()
 		{
 			printf(RED);
 			printf("[⛔️KO !]\n\n");
+			error++;		
 		}
 		else
 		{
@@ -50,4 +52,5 @@ void test_ft_strlen()
 		}
 		printf(RESET);
 	}
+	return (error);
 }
