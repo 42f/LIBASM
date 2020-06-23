@@ -10,12 +10,12 @@ set logging on
 show logging
 
 file /home/user42/42/repo/tester_bvalette/test
-display /s $rdi
+display /s **$rdi
 display /s $rsi
-display /d $rax
-display /d $rcx
+display /a $rdx
+display /a $rcx
 
-b ft_atoi_base.s:28
+b ft_list_remove_if 
 
 define x_c
     set var $repeatCount=$rbp - $rsp + 8 
