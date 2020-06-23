@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:01:02 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/22 15:58:24 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/23 08:41:02 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ int main(int ac, char **av)
 	{
 		print_split("FT_LIST_PUSH_FRONT");
 		error += test_ft_list_push_front();
+	}
+
+	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_list_remove_if") == 0))
+	{
+		print_split("FT_LIST_REMOVE_IF");
+		error += test_ft_list_remove_if();
 	}
 
 	print_split("TESTS RESULT");

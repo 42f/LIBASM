@@ -27,9 +27,9 @@ int	test_ft_strdup();
 int	test_ft_strdup_long();
 int	test_ft_atoi_base();
 int	test_ft_list_push_front();
+int	test_ft_list_remove_if();
 /*
 int	test_ft_list_size();
 int	test_ft_list_sort();
-int	test_ft_list_remove_if();
 */
 #endif

@@ -10,6 +10,7 @@ SRCS +=$(SRCS_DIR)test_strcpy.c
 SRCS +=$(SRCS_DIR)test_strdup.c
 SRCS +=$(SRCS_DIR)test_atoi_base.c
 SRCS +=$(SRCS_DIR)test_list_push_front.c
+SRCS +=$(SRCS_DIR)test_list_remove_if.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -66,6 +67,9 @@ ft_strdup: FORCE $(NAME)
 	./test $@
 ft_list_push_front: FORCE $(NAME)
 	./test $@
+ft_list_remove_if: FORCE $(NAME)
+	./test $@
+
 clean:
 	$(RM) $(OBJS)
 
