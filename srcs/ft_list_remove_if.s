@@ -19,6 +19,9 @@ ft_list_remove_if:
 
 	cmp rdi, 0				; check all argument != NULL
 	je return
+	mov r12, [rdi]			; check all argument != NULL
+	cmp r12, 0				; check all argument != NULL
+	je return
 	cmp rsi, 0
 	je return
 	cmp rdx, 0

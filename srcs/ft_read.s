@@ -7,7 +7,7 @@ section .text
 ft_read:
 	push rbp
 	mov rbp, rsp
-
+	
 	mov rax, SYS_READ	; syscall id for read
 	syscall
 	cmp rax, 0			; check return

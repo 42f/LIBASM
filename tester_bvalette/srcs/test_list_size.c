@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/24 19:49:59 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/24 20:52:50 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,27 @@ static int test(int nb)
 int test_ft_list_size()
 {
 	int error = 0;
+	int ret = 0;
 
 	error += test(42);
 	error += test(6);
 	error += test(1);
 	error += test(0);
-	
+
+	printf("Test with null data_ref pointer... Should not segfault");
+	ret = ft_list_size(NULL);
+	printf(GREEN"[✅ PASSED]\n"RESET);
+	if (ret == 0)
+	{
+		printf(GREEN);
+		printf("\t[✅ PASSED] (returned %d)\n\n", ret);
+	}
+	else
+	{
+		printf(RED);
+		printf("\t\a[⛔️ FAILED !] Was expecting [0] and got [%d] \n", ret);
+		error++;
+	}
+	printf(RESET);
 	return (error);
 }

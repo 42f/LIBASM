@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/24 18:25:52 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/24 20:43:39 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 
 	t_list *cursor = head;
 
-	printf(GREEN"BEFORE -----\n"RESET);
+	printf(RED"BEFORE -----\n"RESET);
 	printf("Head   Address {%p}\n", head);
 	printf("Cursor Address {%p}\n\n", cursor);
 	for (int i = 0; cursor != NULL; i++)
@@ -90,7 +90,7 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 	
 	cursor = head;
 
-	printf(GREEN"AFTER -----\n"RESET);
+	printf(RED"AFTER -----\n"RESET);
 	printf("Head   Address {%p}\n", head);
 	printf("Cursor Address {%p}\n\n", cursor);
 	int i = 0;
@@ -133,7 +133,10 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 int test_ft_list_remove_if()
 {
 	int error = 0;
+	t_list *head = NULL;
 
+	error += test_list("DELETE", "DELETE", "DELETE", "DELETE","DELETE");
+	error += test_list("DELETE", "1_OK", "2_OK", "3_OK", "4_OK");
 	error += test_list("DELETE", "1_OK", "DELETE", "DELETE", "DELETE");
 	error += test_list("DELETE", "1_OK", "DELETE", "2_OK", "DELETE");
 	error += test_list("DELETE", "1_OK", "DELETE", "DELETE", "2_OK");
@@ -142,7 +145,30 @@ int test_ft_list_remove_if()
 	error += test_list("DELETE", "1_OK", "DELETE", "2_OK", "3_OK");
 	error += test_list("DELETE", "1_OK", "2_OK", "DELETE", "3_OK");
 	error += test_list("DELETE", "DELETE", "DELETE", "DELETE", "1_OK");
-	error += test_list("DELETE", "DELETE", "DELETE", "DELETE","DELETE");
+	
+	printf("\nTest with uninitialized list pointer... Should not segfault ");
+	ft_list_remove_if(&head, "DELETE", strcmp, free_fct);	
+	printf(GREEN"[✅ PASSED]\n"RESET);
+
+	printf("Test with null pointer... Should not segfault");
+	ft_list_remove_if(NULL, "DELETE", strcmp, free_fct);	
+	printf(GREEN"[✅ PASSED]\n"RESET);
+
+	head = (t_list*)malloc(sizeof(t_list));	
+	head->data = strdup("DELETE");
+	head->next = NULL;
+
+	printf("Test with null data_ref pointer... Should not segfault");
+	ft_list_remove_if(&head, NULL, strcmp, free_fct);	
+	printf(GREEN"[✅ PASSED]\n"RESET);
+
+	printf("Test with null cmp_function pointer... Should not segfault");
+	ft_list_remove_if(&head, "DELETE", NULL, free_fct);	
+	printf(GREEN"[✅ PASSED]\n"RESET);
+
+	printf("Test with null free_function pointer... Should not segfault");
+	ft_list_remove_if(&head, "DELETE", strcmp, NULL);	
+	printf(GREEN"[✅ PASSED]\n"RESET);
 
 	return (error);
 }

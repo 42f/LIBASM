@@ -22,7 +22,7 @@ CFLAGS = -Werror
 CFLAGS += -Wextra
 CFLAGS += -Wall
 CFLAGS += -g
-# CFLAGS += -fsanitize=address
+#CFLAGS += -fsanitize=address
 
 ifeq ($(DEBUG), 1)
  CFLAGS += -fsanitize=address
