@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/22 19:03:02 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/24 20:12:11 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,30 @@ int test_ft_list_push_front()
 	printf(GREEN"AFTER\n"RESET);
 	printf("Head Address {%p}\n\n", head);
 	printf("head->data = %s\nhead->next = %p\n\n", head->data, head->next);
-	printf("head->->next->data = %s\nhead->next->next = %p\n", head->next->data, head->next->next);
+	printf("head->next->data = %s\nhead->next->next = %p\n", head->next->data, head->next->next);
 
 		
 	if (head->next != NULL && strcmp(head->data, new_str) == 0
 		&& head->next->next == NULL && strcmp(head->next->data, "bye") == 0)
 		{
 			printf(GREEN);
-			printf("\n\t\t[✅ PASSED] \n");
+			printf("\n\t\t[✅ PASSED] \n\n");
 		}
 		else
 		{
 			printf(RED);
-			printf("\n\t\t[⛔️ FAILED !] \n");
+			printf("\n\t\t[⛔️ FAILED !] \n\n");
 			error++;
 		}
 		printf(RESET);
+
+	printf("Test with null pointer... Should not segfault "RESET);
+	ft_list_push_front(NULL, new_str);
+	printf("[✅ PASSED]\n");
+	printf("Test with null data... Should not segfault "RESET);
+	ft_list_push_front(&head, new_str);
+	printf("[✅ PASSED]\n");
+
 	return (error);
 }
 

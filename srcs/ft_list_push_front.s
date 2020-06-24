@@ -8,6 +8,9 @@ ft_list_push_front:
 	push rbp
 	mov rbp, rsp
 	
+	cmp rdi, 0			; check if argument != NULL
+	je return
+	
 	push rsi
 	push rdi
 	mov rdi, 16

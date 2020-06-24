@@ -17,6 +17,15 @@ ft_list_remove_if:
 	push rbp
 	mov rbp, rsp
 
+	cmp rdi, 0				; check all argument != NULL
+	je return
+	cmp rsi, 0
+	je return
+	cmp rdx, 0
+	je return
+	cmp rcx, 0
+	je return
+
 	sub rsp, 32				; CREATE SPACE ON STACK
 	mov [rsp], rdx			; save to stack cmp function
 	mov [rsp + 8], rcx		; save to stack free function
