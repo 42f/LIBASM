@@ -4,7 +4,7 @@
 ;	(*free_fct)(list_ptr->data)
 
 
-; r12 = previous element (t_list *)
+; r12 = stores the last undeleted element (t_list *)
 ; r13 = current element (t_list *)
 ; r14 = next element (t_list *)
 ; r15 = data of current element (void *)
@@ -34,7 +34,6 @@ next_element:
 	
 	cmp r14, 0
 	je return
-	mov r12, r13			; set current element in r12 before moving to next one
 	mov r13, r14			; move to next element address
 	mov r14, [r13 + 8]		; save current's next element address in r14
 	mov r15, [r13]			; dereferenc rdi to access its data
@@ -45,12 +44,13 @@ cmp_loop:
 	call [rsp]				; call cmp function
 	cmp rax, 0
 	je erase_data
+	mov r12, r13			; set current element in r12 before moving to next one
 	jmp next_element
 	
 erase_data:
-	mov rdi, r15			; put data in rdi for cmp function
+	mov rdi, r15			; put data in rdi for free function
 	call [rsp + 8]			; call the free_fct to free data
-	cmp [rsp + 16], r12
+	cmp [rsp + 16], r12		; check if current element is the first of the list
 	je reattache_first_element
 	mov [r12 + 8], r14		; set next elemen in the previou's next pointer : shortcut the current
 	mov rdi, r13			; set current element address in rdi for free function

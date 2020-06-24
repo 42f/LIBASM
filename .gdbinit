@@ -10,10 +10,11 @@ set logging on
 show logging
 
 file /home/user42/42/repo/tester_bvalette/test
-display /s **$rdi
-display /s $rsi
-display /a $rdx
-display /a $rcx
+display /x $r12
+display /x $r13
+display /x $r14
+display /x $r15
+display /s $r15
 
 b ft_list_remove_if 
 

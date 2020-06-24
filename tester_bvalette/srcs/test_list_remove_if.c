@@ -6,19 +6,21 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/24 09:46:50 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/24 18:25:52 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
 #include "tester_libasm.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <setjmp.h>
+#include <signal.h>
 
 void free_fct(void *ptr)
 {
-
 	free(ptr);
-	
 }
 
 /////////
@@ -30,6 +32,7 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 	int error = 0;
 	char *str_test[] = {str_0, str_1, str_2, str_3};
 	int nb_to_del = 0;
+
 	for (int i = 0; i <= 3; i++)
 	{
 		if (strcmp(str_ref, str_test[i]) == 0)
@@ -72,7 +75,7 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 
 	t_list *cursor = head;
 
-	printf(GREEN"BEFORE\n"RESET);
+	printf(GREEN"BEFORE -----\n"RESET);
 	printf("Head   Address {%p}\n", head);
 	printf("Cursor Address {%p}\n\n", cursor);
 	for (int i = 0; cursor != NULL; i++)
@@ -80,16 +83,16 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 		printf("[Elem #%2d]  %p\n", i, cursor);
 		printf(DARK"cursor->data = "GREEN"%s"DARK"\ncursor->next = %p\n"RESET, cursor->data, cursor->next);
 		cursor = cursor->next;
+		
 	}
 
 	ft_list_remove_if(&head, "DELETE", strcmp, free_fct);	
 	
 	cursor = head;
 
-	printf(GREEN"AFTER\n"RESET);
+	printf(GREEN"AFTER -----\n"RESET);
 	printf("Head   Address {%p}\n", head);
 	printf("Cursor Address {%p}\n\n", cursor);
-
 	int i = 0;
 	while (cursor != NULL)
 	{
@@ -108,7 +111,7 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 	if (error == 0 && i == (4 - nb_to_del))
 	{
 		printf(GREEN);
-		printf("\n\t\t[✅ PASSED] \n");
+		printf("\n\t\t[list ✅ PASSED] \n");
 	}
 	else if (i <= (4 - nb_to_del))
 	{
@@ -119,7 +122,7 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 	else
 	{
 		printf(RED);
-		printf("\n\t\t[⛔️ FAILED ! %d element(s) still in the list] \n", error);
+		printf("\n\t\t[⛔️ FAILED ! %d element(s) still in the list] \n", error + 1);
 		error++;
 	}
 	printf(RESET);
@@ -138,6 +141,8 @@ int test_ft_list_remove_if()
 	error += test_list("DELETE", "1_OK", "2_OK", "3_OK", "4_OK");
 	error += test_list("DELETE", "1_OK", "DELETE", "2_OK", "3_OK");
 	error += test_list("DELETE", "1_OK", "2_OK", "DELETE", "3_OK");
+	error += test_list("DELETE", "DELETE", "DELETE", "DELETE", "1_OK");
+	error += test_list("DELETE", "DELETE", "DELETE", "DELETE","DELETE");
 
 	return (error);
 }
