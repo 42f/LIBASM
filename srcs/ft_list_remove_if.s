@@ -3,53 +3,65 @@
 ;	(*cmp)(list_ptr->data, data_ref);
 ;	(*free_fct)(list_ptr->data)
 
+
+; r12 = previous element (t_list *)
+; r13 = current element (t_list *)
+; r14 = next element (t_list *)
+; r15 = data of current element (void *)
+
 section .text
 	global ft_list_remove_if
+	extern free
 
 ft_list_remove_if:
 	push rbp
 	mov rbp, rsp
 
-	sub rsp, 32
+	sub rsp, 32				; CREATE SPACE ON STACK
 	mov [rsp], rdx			; save to stack cmp function
 	mov [rsp + 8], rcx		; save to stack free function
-	mov [rsp + 16], rdi		; save to stack first element (head of list)
+	mov [rsp + 16], rdi		; save to stack first argument (= pointer to first element)
 	mov [rsp + 24], rsi		; save to stack data_ref
-	mov r12, [rdi]			; save current element to r12
-	mov rdi, [rdi]			; dereference rdi to access first element
 
-	jmp loop_in_list
+							; SET REGISTERS
+	mov r12, rdi			; save first element pointer to r12, will be replace by previous element in the loop
+	mov r13, [rdi]			; save current element to r13
+	mov r14, [r13 + 8]		; save next element's address in r14
+	mov r15, [r13]			; dereference current element to access its data
+	jmp cmp_loop
 
-go_next_elem:
-	mov r12, rdi			; check if the current elem is the last ...
-	cmp r13, 0
+next_element:
+	
+	cmp r14, 0
 	je return
-	mov rdi, r13			; ... if not, store the current to r13 to relink the list if the next has to be deleted
+	mov r12, r13			; set current element in r12 before moving to next one
+	mov r13, r14			; move to next element address
+	mov r14, [r13 + 8]		; save current's next element address in r14
+	mov r15, [r13]			; dereferenc rdi to access its data
 
-loop_in_list:
-	mov r13, [rdi + 8]		; store next element's address
-	mov rsi, [rsp + 24]		; reset data_ref for strcmp call
-	mov r15, rdi			; store pointed address before dereferencing
-	mov rdi, [rdi]			; dereferencing pointer
+cmp_loop:
+	mov rdi, r15			; put data in rdi for cmp function
+	mov rsi, [rsp + 24]		; reset data_ref
+	call [rsp]				; call cmp function
+	cmp rax, 0
+	je erase_data
+	jmp next_element
+	
+erase_data:
+	mov rdi, r15			; put data in rdi for cmp function
+	call [rsp + 8]			; call the free_fct to free data
+	cmp [rsp + 16], r12
+	je reattache_first_element
+	mov [r12 + 8], r14		; set next elemen in the previou's next pointer : shortcut the current
+	mov rdi, r13			; set current element address in rdi for free function
+	call free				; free the element
+	jmp next_element	
 
-	call [rsp]				; strcmp rdi and rsi to know if the current element has to be removed
-	mov rdi, r15			; get original address in rdi
-	cmp rax, 0				; check strcmp result
-	jne go_next_elem
-
-	mov [r12 + 8], r13		; move the next in the previous one 
-	call [rsp + 8]			; free_fct to free data from the current elem
-
-	mov r14, [rsp + 16]		; if the current elem is the first of the list...
-	cmp [r14], r15
-	je reattache_head
-	mov rdi, [rsp + 16]		; restart from the begining
-	jmp go_next_elem
-
-reattache_head:
-	mov rax, [rsp + 16]		; ... then get the original pointer's address ...
-	mov [rax], r13			; ... to dereference it to the value of the current element's "next"
-	jmp go_next_elem			
+reattache_first_element:
+	mov rax, [rsp + 16]		; get the pointer to the head of list
+	mov [rax], r14			; change pointer content to make it point to current's next element
+	mov rax, [rax]			; dereference it to access
+	jmp next_element	
 
 return:
 	mov rdi, [rsp + 16]

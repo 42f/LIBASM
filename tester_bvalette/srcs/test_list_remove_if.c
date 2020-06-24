@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/23 17:42:41 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/24 09:46:50 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,11 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 	int i = 0;
 	while (cursor != NULL)
 	{
-		if (strcmp(cursor->data, "DELETE") == 0)
+		if (strcmp(cursor->data, str_ref) == 0)
 		{
-			error++;
 			printf(RED);
 			printf("\t[⛔️] \n");
+			error++;
 		}
 		printf("[Elem #%2d]  %p\n", i, cursor);
 		printf(DARK"cursor->data = "GREEN"%s"DARK"\ncursor->next = %p\n"RESET, cursor->data, cursor->next);
@@ -110,7 +110,7 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 		printf(GREEN);
 		printf("\n\t\t[✅ PASSED] \n");
 	}
-	else if (i != (4 - nb_to_del))
+	else if (i <= (4 - nb_to_del))
 	{
 		printf(RED);
 		printf("\n\t\t[⛔️ FAILED ! missing %d elements] \n", 4 - (nb_to_del));
@@ -119,7 +119,8 @@ static int test_list(char *str_ref, char *str_0, char *str_1, char *str_2, char 
 	else
 	{
 		printf(RED);
-		printf("\n\t\t[⛔️ FAILED ! %d elements are still in the list] \n", error);
+		printf("\n\t\t[⛔️ FAILED ! %d element(s) still in the list] \n", error);
+		error++;
 	}
 	printf(RESET);
 	return (error);
@@ -130,12 +131,13 @@ int test_ft_list_remove_if()
 {
 	int error = 0;
 
+	error += test_list("DELETE", "1_OK", "DELETE", "DELETE", "DELETE");
+	error += test_list("DELETE", "1_OK", "DELETE", "2_OK", "DELETE");
 	error += test_list("DELETE", "1_OK", "DELETE", "DELETE", "2_OK");
-	error += test_list("DELETE", "DELETE", "OK", "OK", "OK");
-	error += test_list("DELETE", "OK", "OK", "OK", "OK");
-	error += test_list("DELETE", "OK", "DELETE", "OK", "OK");
-	error += test_list("DELETE", "OK", "OK", "DELETE", "OK");
-	error += test_list("DELETE", "OK", "DELETE", "OK", "DELETE");
+	error += test_list("DELETE", "DELETE", "1_OK", "2_OK", "3_OK");
+	error += test_list("DELETE", "1_OK", "2_OK", "3_OK", "4_OK");
+	error += test_list("DELETE", "1_OK", "DELETE", "2_OK", "3_OK");
+	error += test_list("DELETE", "1_OK", "2_OK", "DELETE", "3_OK");
 
 	return (error);
 }
