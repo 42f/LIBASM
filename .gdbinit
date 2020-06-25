@@ -16,7 +16,7 @@ display /x $r14
 display /x $r15
 display /s $r15
 
-b ft_list_remove_if 
+b ft_list_sort
 
 define x_c
     set var $repeatCount=$rbp - $rsp + 8 

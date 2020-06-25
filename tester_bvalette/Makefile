@@ -13,6 +13,7 @@ SRCS +=$(SRCS_DIR)test_list_push_front.c
 SRCS +=$(SRCS_DIR)test_list_remove_if.c
 SRCS +=$(SRCS_DIR)test_list_size.c
 SRCS +=$(SRCS_DIR)test_ft_itoa.c
+SRCS +=$(SRCS_DIR)test_list_sort.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -73,6 +74,8 @@ ft_list_push_front: FORCE $(NAME)
 ft_list_remove_if: FORCE $(NAME)
 	./test $@
 ft_list_size: FORCE $(NAME)
+	./test $@
+ft_list_sort: FORCE $(NAME)
 	./test $@
 
 clean:

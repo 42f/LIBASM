@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/25 08:35:59 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/25 09:09:51 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ static int test(int nb)
 			if (i == nb)
 				cursor->next = NULL;
 			else
+			{
 				cursor->next = (t_list *)malloc(sizeof (t_list));
-			if (head == NULL)
-				return (6000);
+				if (cursor->next == NULL)
+					return (6000);
+			}
 			bzero(str_data, sizeof (char) * 50);	
 			
 			cursor = cursor->next;
@@ -87,6 +89,12 @@ int test_ft_list_size()
 	error += test(1);
 	error += test(0);
 
+	if (error >= 6000)
+	{
+		printf("Some malloc went wrong, stopping test");
+		exit (1);
+	}
+		
 	printf("Test with null data_ref pointer... Should not segfault");
 	ret = ft_list_size(NULL);
 	printf(GREEN"[✅ PASSED]\n"RESET);

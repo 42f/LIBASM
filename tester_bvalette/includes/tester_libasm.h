@@ -30,7 +30,6 @@ int	test_ft_list_push_front();
 int	test_ft_list_remove_if();
 int	test_ft_list_size();
 char		*test_ft_itoa(int nb);
-/*
 int	test_ft_list_sort();
-*/
+
 #endif

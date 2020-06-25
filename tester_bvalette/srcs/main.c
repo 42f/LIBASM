@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:01:02 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/25 08:34:37 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/25 09:11:07 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,12 @@ int main(int ac, char **av)
 	{
 		print_split("FT_LIST_SIZE");
 		error += test_ft_list_size();
+	}
+
+	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_list_sort") == 0))
+	{
+		print_split("FT_LIST_SORT");
+		error += test_ft_list_sort();
 	}
 
 	print_split("TESTS RESULT");
