@@ -6,12 +6,20 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:01:02 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/24 18:41:24 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/25 08:34:37 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
 #include "tester_libasm.h"
+
+void signal_catcher(int signum) 
+{
+	printf("Caught signal %d \n", signum);
+//	g_signum++;
+
+	exit (1);	
+}
 
 static void	print_split(char *str)
 {
@@ -34,6 +42,7 @@ static void	print_split(char *str)
 int main(int ac, char **av)
 {
 	int error = 0;
+	
 	if (ac == 1 || (ac == 2 && strcmp(av[1], "ft_strlen") == 0))
 	{
 		print_split("FT_STRLEN");

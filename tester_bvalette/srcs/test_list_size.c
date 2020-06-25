@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/24 20:52:50 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/25 08:35:59 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int test_ft_list_size()
 	if (ret == 0)
 	{
 		printf(GREEN);
-		printf("\t[✅ PASSED] (returned %d)\n\n", ret);
+		printf("\t\t\t\t[✅ PASSED] (returned %d)\n\n", ret);
 	}
 	else
 	{
