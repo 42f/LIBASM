@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <errno.h>
+#include <limits.h>
 
 
 int	test_ft_strlen();

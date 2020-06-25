@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/25 09:28:58 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/25 10:43:30 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,86 @@
 ///			 void ft_list_sort(t_list **begin_list, int (*cmp)());
 ////////
 
-char *randstring(int length) {
 
+// modes :
+#define SORTED 				0 	// produce sorted str
+#define REVERSED_SORTED		1	// produce descending sorted str
+#define RANDOM				3	// pur random shit
+#define END_RANDOM			4	// produce long str with the same begining but the end is random
 //    static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.-#'?!";        
     static char charset[] = "0123456789";        
-    char *randomString = NULL;
 
-    if (length != 0)
-	{
-        randomString = malloc(sizeof(char) * (length +1));
-
-        if (randomString != NULL)
-		{            
-			srand((int)randomString);
-            for (int n = 0; n < length; n++)
-			{            
-                int key = rand() % (int)(sizeof(charset) -1);
-                randomString[n] = charset[key];
-            }
-            randomString[length] = '\0';
-        }
-    }
-
-    return randomString;
+char *randstring_end_random_mode(char *str, int len)
+{
+	srand((int)str);
+	memset(str, '_', len);
+	for (int n = len - 2; n < len; n++)
+	{            
+		int key = rand() % (int)(sizeof(charset) - 1);
+		str[n] = charset[key];
+	}
+	str[len] = '\0';
+	return (str);
+}
+char *randstring_random_mode(char *str, int len)
+{
+	srand((int)str);
+	for (int n = 0; n < len; n++)
+	{            
+		int key = rand() % (int)(sizeof(charset) - 1);
+		str[n] = charset[key];
+	}
+	str[len] = '\0';
+	return (str);
 }
 
-static int test(int nb_elem, int size_str)
+char *randstring_reversed_sorted_mode(char *str, int len)
+{
+	static int value;
+
+	if (value == 0)
+		value = INT_MAX;
+	bzero(str, len);
+	str = test_ft_itoa(value);
+	value--;
+	str[len] = '\0';
+	return (str);
+}
+
+char *randstring_sorted_mode(char *str, int len)
+{
+	static int value;
+
+	bzero(str, len);
+	str = test_ft_itoa(value);
+	value++;
+	str[len] = '\0';
+	return (str);
+}
+
+char *test_randstring(int len, int mode)
+{
+
+    char *str = NULL;
+
+    if (len != 0)
+	{
+	    str = malloc(sizeof(char) * (len + 1));
+  		if (str == NULL)
+			return (NULL);
+		if (mode == SORTED)
+			return (randstring_sorted_mode(str, len));
+		else if (mode == REVERSED_SORTED)
+			return (randstring_reversed_sorted_mode(str, len));
+		else if (mode == RANDOM)
+			return (randstring_random_mode(str, len));
+		else if (mode == END_RANDOM)
+			return (randstring_end_random_mode(str, len));
+    }
+    return (NULL);
+}
+
+static int test(int nb_elem, int size_str, int mode)
 {
 	int error = 0;
 //	int function_return = 0;
@@ -58,7 +112,7 @@ static int test(int nb_elem, int size_str)
 		t_list *cursor = head;
 		for (int i = 1; i <= nb_elem; i++)	
 		{
-			cursor->data = randstring(size_str); 
+			cursor->data = test_randstring(size_str, mode); 
 			if (cursor->data == NULL)
 				return (6000);
 			if (i == nb_elem)
@@ -107,9 +161,10 @@ int test_ft_list_sort()
 	int error = 0;
 	int ret = 0;
 
-	error += test(6, 10);
-	error += test(6, 50);
-	error += test(10, 5);
+	error += test(6, 10, SORTED);
+	error += test(6, 10, REVERSED_SORTED);
+	error += test(6, 10, RANDOM);
+	error += test(6, 4, END_RANDOM);
 
 	if (error >= 6000)
 	{
