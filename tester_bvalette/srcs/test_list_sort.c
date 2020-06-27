@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/27 14:03:55 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/27 15:09:49 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 // modes :
 #define SORTED 				0 	// produce sorted str
 #define REVERSED_SORTED		1	// produce descending sorted str
-#define RANDOM				3	// pur random shit
-#define END_RANDOM			4	// produce long str with the same begining but the end is random
+#define RANDOM				2	// pur random shit
+#define END_RANDOM			3	// produce long str with the same begining but the end is random
  
 	static char charset_full[] = "!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	static char charset[] = "0123456789";        
@@ -128,7 +128,18 @@ static int test(int nb_elem, int size_str, int mode)
 		cursor = cursor->next;
 	}	
 	cursor = head;
-	printf(RED"BEFORE -----\n"RESET);
+	switch (mode)
+	{
+		case SORTED : printf(GREEN"GENERATED LIST MODE : [ALREADY SORTED]\n"RESET);
+			break ;
+		case REVERSED_SORTED : printf(GREEN"GENERATED LIST MODE : [INVERTED SORTED] \n"RESET);
+			break ;
+		case RANDOM : printf(GREEN"GENERATED LIST MODE : [RANDOM] \n"RESET);
+			break ;
+		case END_RANDOM : printf(GREEN"GENERATED LIST MODE : [STR ENDING RANDOMLY] \n"RESET);
+			break ;
+	}
+	printf(RED"-- BEFORE --\n"RESET);
 	printf("Head   Address {%p} -> {%p}\n", &head, head);
 	printf("Cursor Address {%p}\n\n", cursor);
 	for (int i = 0; cursor != NULL; i++)
@@ -141,7 +152,7 @@ static int test(int nb_elem, int size_str, int mode)
 	ft_list_sort(&head, strcmp);
 
 	size_list = ft_list_size(head);
-	printf(RED"\nAFTER -----\n"RESET);
+	printf(RED"\n-- AFTER --\n"RESET);
 	printf("Head   Address {%p} -> {%p}\n", &head, head);
 	printf("Cursor Address {%p}\n\n", cursor);
 	cursor = head;
@@ -183,15 +194,17 @@ int test_ft_list_sort()
 {
 	int error = 0;
 
-	error += test(6, 10, REVERSED_SORTED);
-/*
-	error += test(20, 10, SORTED);
-	error += test(6, 10, RANDOM);
-	error += test(6, 4, END_RANDOM);
-*/
+	error += test(9, 10, REVERSED_SORTED);
+	error += test(7, 10, REVERSED_SORTED);
+	error += test(11, 10, SORTED);
+	error += test(7, 10, SORTED);
+	error += test(9, 10, RANDOM);
+	error += test(7, 10, RANDOM);
+	error += test(8, 4, END_RANDOM);
+	error += test(10, 4, END_RANDOM);
 	if (error >= 6000)
 	{
-		printf("Some malloc went wrong, stopping test");
+		printf("Some malloc went wrong, stop test");
 		exit (1);
 	}
 		

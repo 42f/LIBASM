@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 14:36:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/22 12:49:35 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/27 15:30:23 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,21 @@ int test_ft_strdup_long()
 	ret_ft = ft_strdup(str_1); 
 	if (ret_ft == NULL)
 	{
-		printf(RED);
-		printf("\n\n[⛔️KO !]  => LIBFT FUNCTION Returned NULL pointer");
+		if (errno == 12)
+		{
+			// code to make malloc fail in the asm code
+			//mov r12, 100000
+			//mul r12
+			printf(GREEN);
+			printf("\n\n MALLOC FAILED : LIBFT FUNCTION Returned NULL pointer, errno was set to : %d", errno );
+		}
+		else
+		{
+			printf(RED);
+			printf("\n\n LIBFT FUNCTION Returned NULL pointer, but errno was set to : %d", errno );
+			error++;
+		}
 		free(ret_c);
-		error++;
 		return (error);
 	}
 	ret_c =  strdup(str_1);

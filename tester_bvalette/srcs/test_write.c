@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 13:37:18 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/22 12:05:11 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/27 15:06:59 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static int test_fd(int fd, char *str, int len)
 	int errno_ft = 0;
 	int errno_c = 0;
 		
-	printf(GREEN);
-	printf("\n\nTest with fd = %d \n", fd);
+	printf("\n\nTest with fd = %d and buff %p\n", fd, str);
 	printf(RESET);
 	write(fd, "[", 1);
 	errno = 0;
@@ -33,8 +32,7 @@ static int test_fd(int fd, char *str, int len)
 	ret_ft = ft_write(fd, str, len);
 	errno_ft = errno;	
 	write(fd, "]\n", 2);
-	printf("c  [%d]\n", errno);
-	printf("errno  : ft [%2d] | c [%2d] ", errno_ft, errno_c);
+	printf(DARK"errno  : ft [%2d] | c [%2d] ", errno_ft, errno_c);
 	if (errno_ft == errno_c)
 	{
 		printf(GREEN);
@@ -46,8 +44,7 @@ static int test_fd(int fd, char *str, int len)
 		printf("[⛔️KO !]\n");
 		error++;
 	}
-	printf(RESET);
-	printf("return : ft [%2d] | c [%2d] ", ret_ft, ret_c);
+	printf(DARK"return : ft [%2d] | c [%2d] ", ret_ft, ret_c);
 	if (ret_ft == ret_c)
 	{
 		printf(GREEN);
@@ -86,6 +83,7 @@ int test_ft_write()
 	error += test_fd(4242, "yellow!\n", 8);
 	error += test_fd(1, "yellow!\n", 8);
 	error += test_fd(-1, "Hollow!\n", 8);
+	error += test_fd(1, NULL, 8);
 
 	return (error);
 }

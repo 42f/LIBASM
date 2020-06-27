@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:01:02 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/25 09:11:07 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/27 15:09:09 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,13 @@ int main(int ac, char **av)
 	if (error == 0)
 	{
 		printf(GREEN);
-		printf("\t\t\t[PASSED] ✅\n");
+		printf("\t\t\tFINAL : [PASSED] ✅\n");
 		printf("\t\t\t[%d] errors\n\n\n", error);
 	}
 	else
 	{
 		printf(RED);
-		printf("\t\t\t[FAILED] ⛔️\a");
+		printf("\t\t\tFINAL : [FAILED] ⛔️\a");
 		printf("\t\t\t[%d] errors\n\n\n", error);
 		error++;
 	}

@@ -15,8 +15,8 @@ ft_write:
 	jmp return
 
 return_invalid:
-	neg rax				; get abs value of syscall return
-	mov r8, rax			; store away return for later use
+	neg rax						; get abs value of syscall return
+	mov r8, rax					; store away return for later use
 	call __errno_location		;get errno int* address to modify it
 	mov [rax], r8
 	xor rax, rax

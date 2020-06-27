@@ -59,7 +59,7 @@ relink_list:
 	mov rax, [rsp + 8]		; update pointer to list start with current element
 	mov [rax], r13
 
-	mov rdi, [rsp + 8]
+	mov rdi, [rsp + 8]		; start from the top and update rdi to reset all register
 	jmp start_list	
 
 return:
