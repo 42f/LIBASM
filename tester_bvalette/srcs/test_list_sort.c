@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/25 10:43:30 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/27 11:27:25 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #define REVERSED_SORTED		1	// produce descending sorted str
 #define RANDOM				3	// pur random shit
 #define END_RANDOM			4	// produce long str with the same begining but the end is random
-//    static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.-#'?!";        
+    static char charset_full[] = "!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";        
     static char charset[] = "0123456789";        
 
 char *randstring_end_random_mode(char *str, int len)
@@ -55,11 +55,10 @@ char *randstring_reversed_sorted_mode(char *str, int len)
 	static int value;
 
 	if (value == 0)
-		value = INT_MAX;
+		value = strlen(charset_full) - 1;
 	bzero(str, len);
-	str = test_ft_itoa(value);
+	str[0] = charset_full[value];
 	value--;
-	str[len] = '\0';
 	return (str);
 }
 
@@ -67,10 +66,11 @@ char *randstring_sorted_mode(char *str, int len)
 {
 	static int value;
 
+	if (value == (int)strlen(charset_full))
+		value = 0;
 	bzero(str, len);
-	str = test_ft_itoa(value);
+	str[0] = charset_full[value];
 	value++;
-	str[len] = '\0';
 	return (str);
 }
 
@@ -81,7 +81,7 @@ char *test_randstring(int len, int mode)
 
     if (len != 0)
 	{
-	    str = malloc(sizeof(char) * (len + 1));
+	    str = calloc(sizeof(char), (len + 1));
   		if (str == NULL)
 			return (NULL);
 		if (mode == SORTED)
@@ -99,59 +99,81 @@ char *test_randstring(int len, int mode)
 static int test(int nb_elem, int size_str, int mode)
 {
 	int error = 0;
-//	int function_return = 0;
-
+	int size_list = 0;
 	t_list *head = NULL;
+	t_list *cursor;
+	size_str = (size_str < 2) ? 2 : size_str;
 
-	if (nb_elem > 0)
+	if (nb_elem <= 0)
+		return (0);
+	head = (t_list *)malloc(sizeof (t_list));
+	if (head == NULL)
+		return (6000);
+
+	cursor = head;
+	for (int i = 1; i <= nb_elem; i++)	
 	{
-		head = (t_list *)malloc(sizeof (t_list));
-		if (head == NULL)
+		cursor->data = test_randstring(size_str, mode); 
+		if (cursor->data == NULL)
 			return (6000);
-
-		t_list *cursor = head;
-		for (int i = 1; i <= nb_elem; i++)	
-		{
-			cursor->data = test_randstring(size_str, mode); 
-			if (cursor->data == NULL)
-				return (6000);
-			if (i == nb_elem)
-				cursor->next = NULL;
-			else
-			{
-				cursor->next = (t_list *)malloc(sizeof (t_list));
-				if (cursor->next == NULL)
-					return (6000);
-			}	
-			cursor = cursor->next;
-		}	
-		cursor = head;
-		printf("Head   Address {%p}\n", head);
-		printf("Cursor Address {%p}\n\n", cursor);
-		for (int i = 0; cursor != NULL; i++)
-		{
-			printf("[Elem #%2d]  %p\n", i, cursor);
-			printf(DARK"cursor->data = "GREEN"%s"DARK"\ncursor->next = %p\n"RESET, cursor->data, cursor->next);
-			cursor = cursor->next;
-		}
-	}
-	
-/*	function_return = ft_list_size(head);
-	printf("\nTesting list lenght %d... ", nb_elem);
-		
-	if (function_return == nb_elem)
-		{
-			printf(GREEN);
-			printf("\t[✅ PASSED] (returned %d)\n\n", function_return);
-		}
+		if (i == nb_elem)
+			cursor->next = NULL;
 		else
 		{
+			cursor->next = (t_list *)malloc(sizeof (t_list));
+			if (cursor->next == NULL)
+				return (6000);
+		}	
+		cursor = cursor->next;
+	}	
+	cursor = head;
+	printf(RED"BEFORE -----\n"RESET);
+	printf("Head   Address {%p} -> {%p}\n", &head, head);
+	printf("Cursor Address {%p}\n\n", cursor);
+	for (int i = 0; cursor != NULL; i++)
+	{
+		printf("[Elem #%2d]  %p\n", i, cursor);
+		printf(DARK"cursor->data = "GREEN"%s"DARK"\ncursor->next = %p\n"RESET, cursor->data, cursor->next);
+		cursor = cursor->next;
+	}
+	
+	ft_list_sort(&head, strcmp);
+
+	size_list = ft_list_size(head);
+	printf(RED"\nAFTER -----\n"RESET);
+	printf("Head   Address {%p} -> {%p}\n", &head, head);
+	printf("Cursor Address {%p}\n\n", cursor);
+	cursor = head;
+	for (int i = 0; cursor->next != NULL; i++)
+	{
+		if (strcmp(cursor->data, cursor->next->data) > 0)
+		{
+			error++;
 			printf(RED);
-			printf("\t\a[⛔️ FAILED !] Was expecting [%d] and got [%d] \n", nb_elem, function_return);
+		}
+		printf("[Elem #%2d]  %p\n", i, cursor);
+		printf(DARK"cursor->data = "GREEN"%s"DARK"\ncursor->next = %p\n"RESET, cursor->data, cursor->next);
+		cursor = cursor->next;
+	}
+
+	if (error == 0 && size_list == nb_elem)
+	{
+		printf(GREEN);
+		printf("\t[✅ PASSED]\n\n");
+	}
+	else
+	{
+		printf(RED);
+		if (error != 0)
+			printf("\t\a[⛔️ FAILED !] [%d] errors \n\n", error);
+		if (size_list != nb_elem)
+		{
+			printf("\t\a[⛔️ FAILED !] Size of the list after function is different ! \n\t\tNb of elements before %d / after %d\n"DARK"(assuming the ft_list_size of the current libasm is fully functional)\n", nb_elem, size_list);
 			error++;
 		}
-		printf(RESET);
-*/
+	}
+	printf(RESET);
+
 	return (error);
 }
 
@@ -159,31 +181,28 @@ static int test(int nb_elem, int size_str, int mode)
 int test_ft_list_sort()
 {
 	int error = 0;
-	int ret = 0;
 
-	error += test(6, 10, SORTED);
 	error += test(6, 10, REVERSED_SORTED);
+/*
+	error += test(20, 10, SORTED);
 	error += test(6, 10, RANDOM);
 	error += test(6, 4, END_RANDOM);
-
+*/
 	if (error >= 6000)
 	{
 		printf("Some malloc went wrong, stopping test");
 		exit (1);
 	}
 		
-	printf("Test with null data_ref pointer... Should not segfault");
-	ret = ft_list_size(NULL);
-	printf(GREEN"[✅ PASSED]\n"RESET);
-	if (ret == 0)
+	if (error == 0)
 	{
 		printf(GREEN);
-		printf("\t\t\t\t[✅ PASSED] (returned %d)\n\n", ret);
+		printf("\n\n\t\t\t\tFinal for ft_list_sort [✅ PASSED]\n\n");
 	}
 	else
 	{
 		printf(RED);
-		printf("\t\a[⛔️ FAILED !] Was expecting [0] and got [%d] \n", ret);
+		printf("\n\n\t\aFinal for ft_list_sort [⛔️ FAILED !] [%d]\n", error);
 		error++;
 	}
 	printf(RESET);
