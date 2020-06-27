@@ -6,7 +6,7 @@
 /*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 18:27:47 by bvalette          #+#    #+#             */
-/*   Updated: 2020/06/27 11:27:25 by bvalette         ###   ########.fr       */
+/*   Updated: 2020/06/27 14:03:55 by bvalette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 #define REVERSED_SORTED		1	// produce descending sorted str
 #define RANDOM				3	// pur random shit
 #define END_RANDOM			4	// produce long str with the same begining but the end is random
-    static char charset_full[] = "!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";        
-    static char charset[] = "0123456789";        
+ 
+	static char charset_full[] = "!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	static char charset[] = "0123456789";        
 
 char *randstring_end_random_mode(char *str, int len)
 {
@@ -144,9 +145,9 @@ static int test(int nb_elem, int size_str, int mode)
 	printf("Head   Address {%p} -> {%p}\n", &head, head);
 	printf("Cursor Address {%p}\n\n", cursor);
 	cursor = head;
-	for (int i = 0; cursor->next != NULL; i++)
+	for (int i = 0; cursor != NULL; i++)
 	{
-		if (strcmp(cursor->data, cursor->next->data) > 0)
+		if (cursor->next != NULL && strcmp(cursor->data, cursor->next->data) > 0)
 		{
 			error++;
 			printf(RED);
