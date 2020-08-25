@@ -15,6 +15,9 @@ SRCS_BONUS += $(SRCS_DIR)ft_atoi_base_check_base.s
 SRCS_BONUS += $(SRCS_DIR)ft_atoi_base_computation.s
 SRCS_BONUS += $(SRCS_DIR)ft_atoi_base_convert.s
 SRCS_BONUS += $(SRCS_DIR)ft_atoi_base_skip.s
+SRCS_BONUS += $(SRCS_DIR)ft_list_push_front.s
+SRCS_BONUS += $(SRCS_DIR)ft_list_remove_if.s
+SRCS_BONUS += $(SRCS_DIR)ft_list_size.s
 SRCS_BONUS += $(SRCS_DIR)ft_strchr.s
 
 OBJS_BONUS = $(SRCS_BONUS:.s=.o)
