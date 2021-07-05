@@ -1,5 +1,5 @@
 # libasm
-[École 42 - project] First approach the basics of assembly language, with intel x86_64 syntax. This project reimplement some C standard functions.
+[École 42 - project] First approach to basics of assembly language, with intel x86_64 syntax. This project reimplement some C standard functions.
 
 This lib contain basic functions of the libc :
 
